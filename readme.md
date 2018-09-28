@@ -1,11 +1,28 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+##WestVint
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+####Tasks
+1) Rēķinu datubāze/ skats
+
+	Jauna rēķina izveide:
+	
+	⁃	atlasa klientu no Klientu DB
+
+			Produktu pievienošana
+
+	⁃	product ( produkts_db = product_nosaukums/product_long_dm/product_diameter_dm/ DIM_ISO/
+	⁃	Product_quantity( produktu skates)
+	⁃	Product_price( 1 qty)
+	⁃	product_all_price ( all product qty)
+	⁃	Price
+	⁃	Taxes 
+	⁃	TOTAL PRICE
+
+| preces nr rēķinā |  produkta_id |  produkta_artikuls | Produkta apraksts(product_nosaukums/product_long_dm/product_diameter_dm/ DIM_ISO | QTY | produkta cena gabala | produkta cena gabarra * dauzums |   
+
+Apakšā manuāli tiek ievadīt parakstiesīgā persona. vārds uzvārds, amats un uzņēmums
+
+Pēc rēķina akceptēšanas tik manuāli noņemts skaits no produktu_db.
+
 
 ## About Laravel
 

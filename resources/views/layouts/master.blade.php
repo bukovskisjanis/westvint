@@ -199,7 +199,7 @@ $('#edit-client').on('show.bs.modal', function (event) {
     var group = button.data('progroup')
     var standart = button.data('prosts')
     var name = button.data('proname')
-    var articule = button.data('proarticul')
+    var articul = button.data('proarticul')
     var barcode = button.data('probarcode')
     var bordercode = button.data('probordercode')
     var din_iso = button.data('prodiniso')
@@ -243,7 +243,7 @@ $('#edit-client').on('show.bs.modal', function (event) {
     modal.find('.modal-body #product_retail_price').val(product_retail_price);
     modal.find('.modal-body #product_wholesale_price').val(product_wholesale_price);
     modal.find('.modal-body #product_product_minimum_price').val(product_product_minimum_price);
-    modal.find('.modal-body #product_revers_price').val(pprod->product_revers_price);
+    modal.find('.modal-body #product_revers_price').val(product_revers_price);
     modal.find('.modal-body #product_neto_mass_in_parcel_amount').val(product_neto_mass_in_parcel_amount);
     modal.find('.modal-body #product_neto_mass_in_parcel').val(product_neto_mass_in_parcel);
     modal.find('.modal-body #product_bruto_mass_in_parcel_amount').val(product_bruto_mass_in_parcel_amount);
