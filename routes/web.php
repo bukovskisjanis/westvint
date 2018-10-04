@@ -19,8 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
 Route::resource('darbinieki','DarbiniekiController');
 
 Route::resource('client','ClientController');
 
 Route::resource('product','ProductController');
+
+Route::get('/invoice', 'InvoiceController@generator')->name('generator');
