@@ -24,3 +24,5 @@ Route::resource('darbinieki','DarbiniekiController');
 Route::resource('client','ClientController');
 
 Route::resource('product','ProductController');
+
+Route::resource('invoice','InvoiceController');

@@ -40,7 +40,7 @@
 	                  <td>{{$clt->bankcode}}</td>
 	                  <td>{{$clt->bankaccnr}}</td>
 	                  <td>{{$clt->description}}</td>
-	                  <td>                  
+	                  <td>
 	                  	<div class="btn-group">
                               <a href="{{url('darbinieki/profile')}}">
 		                        <button
@@ -62,12 +62,12 @@
 	                      			data-mydescription="{{$clt->description}}"
 	                      			data-myid="{{$clt->id}}"
 		                      		class="btn btn-edit btn-flat popbutton"
-		                      		data-toggle="modal" 
+		                      		data-toggle="modal"
 		                      		data-target="#edit-client">
 		                      		<i class="fa fa-edit "></i>
 		                      	</button>
 				      <form action="/client/{{$clt->id}}" method="DELETE">
-						<button type="submit" class="btn btn-delete btn-flat"><i class="fa fa-times-circle"></i>
+								<button type="submit" class="btn btn-delete btn-flat"><i class="fa fa-times-circle"></i>
 				      </form>
 				      </button>
 	                      </div>
@@ -91,17 +91,17 @@
                 <h4 class="modal-title">Add new client</h4>
               </div>
 	              <form action="{{route('client.store')}}" method="post">
-	               {{csrf_field()}} 
+	               {{csrf_field()}}
 	              <div class="modal-body">
 		      		@include('client.form')
 	              </div>
 	              <div class="modal-footer">
 	                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
 	                <button type="submit" class="btn btn-primary">Save</button>
-	              </div>		 
+	              </div>
               </form>
             </div>
-            <!-- /.modal-content -->  
+            <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
         </div>
@@ -115,17 +115,17 @@
                 <h4 class="modal-title">Edit Clients data</h4>
               </div>
 	              <form action="{{route('client.show','test')}}" method="post">
-	               {{csrf_field()}} 
+	               {{csrf_field()}}
 	              <div class="modal-body">
 		      		@include('client.form')
 	              </div>
 	              <div class="modal-footer">
 	                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
 	                <button type="submit" class="btn btn-primary">Save</button>
-	              </div>		 
+	              </div>
               </form>
             </div>
-          </div>     
+          </div>
         </div>
 
 @endsection

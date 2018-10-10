@@ -7,6 +7,7 @@
   <title>WestVint-Admin</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
+  <link rel="stylesheet" href="{{asset('css/invoice.css')}}">
 </head>
 
 <body class="hold-transition sidebar-mini skin-black-light sidebar-collapse">
@@ -14,122 +15,99 @@
 
   <!-- Main Header -->
   <header class="main-header">
+      <nav class="navbar navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="" class="navbar-brand">WestVint</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+              <i class="fa fa-bars"></i>
+            </button>
+          </div>
 
-    <!-- Logo -->
-    <a href="index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>WV</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>WestVint</b></span>
-    </a>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="{{url('darbinieki')}}"><i class="fa fa-user-secret"></i> <span>Employees</span></a></li>
+              <li><a href="{{url('client')}}"><i class="fa fa-group"></i> <span>Clients</span></a></li>
+              <li><a href="{{url('product')}}"><i class="fa fa-cube"></i> <span>Product</span></a></li>
+              <li><a href="{{url('invoice')}}"><i class="fa  fa-files-o"></i> <span>Invoices</span></a></li>
+            </ul>
 
-
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      <!-- Navbar Right Menu -->
-      
-<div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o header"> SingOut</i>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-
-
-
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="{{asset('images/user1-128x128.jpg')}}" class="img-circle" alt="User Image">
+          </div>
+          <!-- /.navbar-collapse -->
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class="dropdown user user-menu">
+                <!-- Menu Toggle Button -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <!-- The user image in the navbar-->
+                  <img src="{{asset('images/user1-128x128.jpg')}}" class="user-image" alt="User Image">
+                  <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                  <span class="hidden-xs">{{Auth::user()->name}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- The user image in the menu -->
+                  <li class="user-header">
+                    <img src="" class="img-circle">
+                      <p>{{Auth::user()->name}}</p>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!-- /.navbar-custom-menu -->
         </div>
-        <div class="pull-left info">
-          <p>{{Auth::user()->name}}</p>
-          <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
+        <!-- /.container-fluid -->
+      </nav>
+    </header>
 
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-        </div>
-      </form>
-      <!-- /.search form -->
-
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li><a href="{{url('darbinieki')}}"><i class="fa fa-user-secret"></i> <span>Employees</span></a></li>
-        <li><a href="{{url('client')}}"><i class="fa fa-group"></i> <span>Clients</span></a></li>
-        <li><a href="{{url('product')}}"><i class="fa fa-cube"></i> <span>Product</span></a></li>
-        <li><a href="{{url('invoice')}}"><i class="fa  fa-files-o"></i> <span>Invoices</span></a></li>
-      </ul>
-      <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        @yield('content')
-    </section>
+    <div class="container container-all">
+        <!-- Content Header (Page header) -->
 
-    <!-- Main content -->
-    <section class="content container-fluid">
-
-
-    </section>
+        <!-- Main content -->
+        <section class="content container-fluid">
+              @yield('content')
+        </section>
     <!-- /.content -->
+    </div>
   </div>
   <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
-      Anything you want
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-  </footer>
-
+      <div class="container">
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 2.4.0
+        </div>
+        <strong>Copyright © 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+        reserved.
+      </div>
+      <!-- /.container -->
+    </footer>
+</div
   <!-- Control Sidebar -->
 
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
-</div>
 <script src="{{asset('js/app.js')}}"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
- 
+
 <script type="text/javascript">
     $('#editdarbinieks').on('show.bs.modal', function (event) {
 
@@ -153,8 +131,8 @@
     modal.find('.modal-body #contract').val(contract);
     modal.find('.modal-body #phone').val(phone);
     modal.find('.modal-body #email').val(email);
-    modal.find('.modal-body #username').val(username);    
-    modal.find('.modal-body #statuss').val(statuss);  
+    modal.find('.modal-body #username').val(username);
+    modal.find('.modal-body #statuss').val(statuss);
     modal.find('.modal-body #employee_id').val(id);
 })
 $('#deletedarbinieks').on('show.bs.modal', function (event) {
@@ -191,7 +169,7 @@ $('#edit-client').on('show.bs.modal', function (event) {
     modal.find('.modal-body #bankname').val(bankname);
     modal.find('.modal-body #bankcode').val(bankcode);
     modal.find('.modal-body #bankaccnr').val(bankaccnr);
-    modal.find('.modal-body #description').val(description); 
+    modal.find('.modal-body #description').val(description);
     modal.find('.modal-body #id').val(id);
 })
     $('#editproduct').on('show.bs.modal', function (event) {
@@ -251,7 +229,7 @@ $('#edit-client').on('show.bs.modal', function (event) {
     modal.find('.modal-body #product_bruto_mass_all').val(product_bruto_mass_all);
 })
 
-</script>  
+</script>
 <script type="text/javascript">
   $(function() {
 
@@ -278,8 +256,74 @@ $('#edit-client').on('show.bs.modal', function (event) {
 
       });
   });
-  
+
 });
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
 </script>
+<script src="../../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 </body>
 </html>

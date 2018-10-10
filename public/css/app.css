@@ -4116,7 +4116,6 @@ a:focus {
 .box-body > .table {
   margin-bottom: 10;
   overflow-x: auto !important;
-  display: block !important;
   webkit-overflow-scrolling: touch;
   white-space: nowrap !important;
   -ms-overflow-style: -ms-autohiding-scrollbar !important;
@@ -17624,6 +17623,16 @@ button.close {
   background: #c94a18;
   border-color: #df2525;
   color:#ffffff;
+}
+.btn-black{
+  background: #000000;
+  border-color: #333333;
+  color:#ffffff;
+}
+.btn-black:hover{
+  background:  #333333;
+  border-color: #000000;
+  color:#fffff !important;
 }
 .modal-delete{
   background: #d2d2d2 !important;
