@@ -7,6 +7,17 @@ use \App\Darbinieki;
 
 class DarbiniekiController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -65,7 +76,6 @@ class DarbiniekiController extends Controller
         //
         echo 'edit';
     }
-
     /**
      * Update the specified resource in storage.
      *

@@ -3,10 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\Products;
+use App\Products;
+use Auth;
 
 class ProductController extends Controller
 {
+
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +49,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Products::create($request->all());
+
+        $fullRequest = $request->all();
+
+        if (!isset($fullRequest['person_add'])){
+            $fullRequest['person_add'] = Auth::user()->name;
+        }
+
+        if (!isset($fullRequest['person_edit'])){
+            $fullRequest['person_edit'] = Auth::user()->name;
+        }
+
+
+        Products::create($fullRequest);
         return back();
     }
 

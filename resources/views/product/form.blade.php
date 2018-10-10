@@ -18,7 +18,7 @@
 			<div class="row">
 				<div class="form-group col-md-3"> 
 					<label for="articule">Articul</label>
-	        		<input type="text" class="form-control" name="articule" id="articule">
+	        		<input type="text" class="form-control" name="articul" id="articul">
 	      		</div>
 				<div class="form-group col-md-3"> 
 					<label for="barcode">Barcode</label>
@@ -87,8 +87,8 @@
 	        		<input type="text" class="form-control" name="product_minimum_price" id="product_minimum_price">
 	      		</div>
 				<div class="form-group col-md-3"> 
-					<label for="product_reverse_price">Product revers price</label>
-	        		<input type="text" class="form-control" name="product_reverse_price" id="product_reverse_price">
+					<label for="product_revers_price">Product revers price</label>
+	        		<input type="text" class="form-control" name="product_revers_price" id="product_revers_price">
 	      		</div>
 	      	</div>
 	      	<div class="row">
