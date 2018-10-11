@@ -27,8 +27,7 @@ Route::resource('client','ClientController');
 
 Route::resource('product','ProductController');
 
-<<<<<<< HEAD
 Route::resource('invoice','InvoiceController');
-=======
-Route::get('/invoice', 'InvoiceController@generator')->name('generator');
->>>>>>> bc7334eec966df614c62002b6151306abf714128
+
+Route::get('/gen/invoice', 'InvoiceController@generator')->name('generator');
+
