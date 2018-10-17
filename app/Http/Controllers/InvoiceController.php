@@ -102,7 +102,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $darbiniekis = invoice::all();
+        $invoice = invoice::all();
         return view('invoice.index',compact('invoice'));
     }
 
@@ -124,7 +124,19 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $fullRequest = $request->all();
+
+        unset($fullRequest['_token']);
+
+        //remove direct miracles
+        unset($fullRequest['articul']);
+        unset($fullRequest['moreinfo']);
+        unset($fullRequest['price-name']);
+        unset($fullRequest['price-name']);
+
+        invoice::create($fullRequest);
+        return back();
     }
 
     /**
@@ -134,8 +146,11 @@ class InvoiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    { 
+        //@fix nedaģelka
+        if (invoice::where('id' , $id)->first()->delete()){
+            return back();            
+        }
     }
 
     /**

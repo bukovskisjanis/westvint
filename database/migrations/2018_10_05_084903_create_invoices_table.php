@@ -15,6 +15,23 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('factadress')->nullable();
+            $table->string('regnr')->nullable();
+            $table->string('pvnregnr')->nullable();
+            $table->string('bankname')->nullable();
+            $table->string('bankcode')->nullable();
+            $table->string('bankaccnr')->nullable();
+            $table->string('devadress')->nullable();
+            $table->string('delivery-type')->nullable();
+            $table->string('paymentmethod')->nullable();
+            $table->string('delivery-model')->nullable();
+            $table->string('payment-date')->nullable();
+            $table->string('dev-entry-date')->nullable();
+            $table->text('product_list')->nullable();
+            $table->string('jobtitle')->nullable();
+            $table->string('client_name')->nullable();
+            $table->string('namesurname')->nullable();
+
             $table->timestamps();
         });
     }

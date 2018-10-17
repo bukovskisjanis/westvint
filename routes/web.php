@@ -29,5 +29,5 @@ Route::resource('product','ProductController');
 
 Route::resource('invoice','InvoiceController');
 
-Route::get('/gen/invoice', 'InvoiceController@generator')->name('generator');
+Route::get('/gen/invoice/{id}', 'InvoiceController@generator')->name('generator');
 
