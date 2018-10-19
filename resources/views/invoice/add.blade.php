@@ -1,3 +1,35 @@
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+  $(function() {
+    $('.product_add_button').click(productAdd);
+
+    function productAdd(){
+      console.log('addin new');
+      $(".invoice_lead_row").append(
+            $(".hidden_product_line").clone().removeClass('hidden').removeClass('hidden_product_line')
+      );
+      $('.killall').unbind('click');
+      $('.killall').click(killAll);
+    }
+
+    function killAll(){
+      console.log($(this).parent().parent());
+      $(this).parent().parent().remove();
+      if ($(".invoice-line").length <= 5){
+        productAdd();
+      }
+    }
+
+
+    $('.killall').click(killAll);
+  });
+</script>
+
+
 
 				<div class="row">
           <div class="col-md-2 col-lg-3">
@@ -81,13 +113,49 @@
                 </div>
             </div>
         </div>
-				<div class="row">
+				<div class="row invoice_lead_row">
             <div class="col-md-12">
                   <div class="form-group col-md-2">
-                      <button type="button" class="form-control btn  btn-primary btn-flat">Pievienot preci</button>
+                      <button type="button" class="product_add_button form-control btn  btn-primary btn-flat">Pievienot preci</button>
                   </div>
             </div>
-            <div class="col-md-12 invoice-line">
+
+            <div class="col-md-12 invoice-line hidden hidden_product_line">
+                <div class="form-group col-md-2">
+                  <label for="articul">Artikuls</label>
+                  <select class="form-control select2" style="width: 100%;"name="articul" id="articul">
+                    <option selected="selected">Alabama</option>
+                    <option>Alaska</option>
+                    <option>California</option>
+                    <option>Delaware</option>
+                    <option>Tennessee</option>
+                    <option>Texas</option>
+                    <option>Washington</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="product">Produkts</label>
+                  <input type="text" class="form-control" name="product[]" id="product">
+                </div>
+                <div class="form-group col-md-1">
+                  <label for="qty">Daudzums</label>
+                  <input type="text" class="form-control" name="qty[]" id="qty">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="oqty-price">Vienības cena bez PVN</label>
+                  <input type="text" class="form-control" name="oqty-price[]" id="oqty-price">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="allqty-price">Kopējā cena bez PVN</label>
+                  <input type="text" class="form-control" name="allqty-price[]" id="allqty-price">
+                </div>
+                <div class="col-md-1 col-lg-1 form-group">
+                  <label>Settings</label>
+                  <button type="button" class="killall form-control btn  btn-danger btn-flat"><i class="fa fa-times-circle"></i></button>
+                </div>
+            </div>
+
+            <div class="col-md-12 invoice-line ">
                 <div class="form-group col-md-2">
                   <label for="articul">Artikuls</label>
                   <select class="form-control select2" style="width: 100%;"name="articul" id="articul">
@@ -118,7 +186,7 @@
                 </div>
                 <div class="col-md-1 col-lg-1 form-group">
                   <label>Settings</label>
-                  <button type="button" class="form-control btn  btn-danger btn-flat"><i class="fa fa-times-circle"></i></button>
+                  <button type="button" class="killall form-control btn  btn-danger btn-flat"><i class="fa fa-times-circle"></i></button>
                 </div>
             </div>
         </div>

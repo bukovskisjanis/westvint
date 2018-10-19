@@ -129,6 +129,19 @@ class InvoiceController extends Controller
 
         unset($fullRequest['_token']);
 
+        $productListArray = array();
+
+        foreach ($fullRequest['product'] as $productInstanceKey => $productInstance) {
+            $productListArray[] = array(
+                'name' => $productInstance,
+                'quantity' => $fullRequest['qty'][$productInstanceKey] ,
+                'oqty-price' => $fullRequest['oqty-price'][$productInstanceKey],
+                'allqty-price' => $fullRequest['allqty-price'][$productInstanceKey]
+            );
+        }
+
+        $fullRequest['product_list'] = json_encode($productListArray);
+
         //remove direct miracles
         unset($fullRequest['articul']);
         unset($fullRequest['moreinfo']);

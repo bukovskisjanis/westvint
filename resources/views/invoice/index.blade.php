@@ -81,6 +81,68 @@
                       </tr>
                     </thead>
                     <tbody>
+
+
+                  @foreach($invoice as $invoice_item)
+                <tr>
+                  <td>{{$invoice_item->id}}</td>
+                  <td>{{$invoice_item->client_name}}</td>
+                  <td>Add this please</td>
+                  <td>Add this please</td>
+                  <td>Created !!!Nav apraskta par Statusu maiņu un piesaistīto biznesa loģiku. Vai tas iet kopā ar `labojumu` loģiku. Ja ja , kur glabat labojumu statistiku !? + čali - frontEnd bags , un liels , tas teksts sarakstīts šada garumā izskatās pēc reāla sūda :D</td>
+                  <td>Summa ktkā paskrēja garām</td>
+                  <td>{{$invoice_item->jobtitle}}</td>
+                  <td>{{$invoice_item->updated_at}}</td>
+                  <td>Nav apraksta par labojumu uzskaitēs biznesa loģiku</td>
+                  <td>kas elle rata ir Data Settings ? </td>
+                  <td><a href="/gen/invoice/{{$invoice_item->id}}"><i class="fa  fa-file-pdf-o"></i></a> </td>
+                  <td>
+                    <div class="btn-group"> 
+                        <button type="button" 
+                          data-empfirstname="{{$invoice_item->client_name}}" 
+                          data-empsurname="{{$invoice_item->jobtitle}}" 
+                          data-empadress="{{$invoice_item->adress}}"  
+                          class="btn btn-edit btn-flat popbutton"
+ 
+                          data-toggle="modal" 
+                          data-target="#editdarbinieks">
+                          <i class="fa fa-edit "></i>
+                        </button>
+              <form action="/invoice/{{$invoice_item->id}}" method="DELETE">
+            <button type="submit" class="btn btn-delete btn-flat"><i class="fa fa-times-circle"></i>
+              </form>
+              </button>
+
+              <div class="modal modal-danger fade" id="deletedarbinieks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-long" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h2 class="modal-title text-center" id="exampleModalLabel">Delete Employee Profile</h2>
+
+                    </div>
+                    <form action="/invoice/{{$invoice_item->id}}" method="DELETE">
+                      {{method_field('destroy')}}
+                        {{csrf_field()}}
+                      <div class="modal-body modal-delete-body">
+                        <p class="text-center">
+                          Are you sure you want to delete this?
+
+                                  </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Don't Delete</button>
+                        <button type="submit" class="btn btn-primary">Yes,Delete</button>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div></div>
+           </td>
+
+                </tr>
+                @endforeach
+
                       <tr>
                         <td></td>
                         <td></td>
@@ -117,7 +179,7 @@
         <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
         <h2 class="modal-title" id="exampleModalLabel">Add new Invoice</h2>
       </div>
-      <form action= method="post">
+      <form action="{{route('invoice.store')}}" method="post">
         {{csrf_field()}}
        <div class="modal-body">
      @include('invoice.add')

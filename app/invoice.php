@@ -26,7 +26,8 @@ class invoice extends Model
     	'price-name' ,
     	'jobtitle',
     	'client_name' ,
-    	'namesurname'
+    	'namesurname',
+        'product_list'
     	];
 
 }
