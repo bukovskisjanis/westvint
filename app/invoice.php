@@ -27,7 +27,10 @@ class invoice extends Model
     	'jobtitle',
     	'client_name' ,
     	'namesurname',
-        'product_list'
+        'product_list',
+        'vendor_company',
+        'vendor_representative',
+        'vendor_jobtitle'
     	];
 
 }

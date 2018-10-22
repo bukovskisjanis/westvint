@@ -206,17 +206,25 @@
                   <label for="product">Izsniedza</label>
                   <input type="text" class="form-control" name="product" id="product" disabled="" placeholder="WestVint">
                 </div>
+
+                <input type="hidden" name="vendor_company" value="WestVint">
+
                 <div class="form-group col-md-2">
                   <label for="jobtitle">Amats</label>
-                  <select class="form-control select2" style="width: 100%;"name="jobtitle" id="jobtitle">
+                  <select class="form-control select2" style="width: 100%;"name="vendor_jobtitle" id="jobtitle">
                     <option selected="selected">Valdes loceklis</option>
                     <option>Valdes priekšsēdētājs</option>
                   </select>
                 </div>
+
+
                 <div class="form-group col-md-2">
                   <label for="qty">Vārds Uzvārds</label>
                   <input type="text" class="form-control" name="" id="person" disabled="" placeholder="Alvis Bukovskis">
                 </div>
+
+                <input type="hidden" name="vendor_representative" value="Alvis Bukovskis">                
+
                 <div class="form-group col-md-3">
                   <label for="qty">Datums</label>
                   <input type="text" class="form-control" name="" id="invoice-date-writen">

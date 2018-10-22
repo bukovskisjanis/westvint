@@ -63,7 +63,7 @@
     </div>
   </div>
   <div class="box-body">
-    <table class="table table-responsive table-hover">
+    <table class="table table-responsive table-hover table-display">
                     <thead>
                       <tr>
                          <th>ID</th>

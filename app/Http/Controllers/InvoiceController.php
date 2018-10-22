@@ -40,7 +40,7 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function generator($id = false)
+    public function generator($id = false , Request $request)
     {
 
         if ($id){
@@ -50,12 +50,12 @@ class InvoiceController extends Controller
 
                 $invoiceDetail = $processedInvoice->first();
 
-
                 $vendor = new Vendor([
-                    'name' => 'WestVint',
+                    // hardcode - city is represntative name + it job description is country ( :( )
+                    'city' =>  $invoiceDetail->vendor_representative ,
+                    'country' => $invoiceDetail->vendor_jobtitle,
+                    'name' => $invoiceDetail->vendor_company,
                     'address' => 'WestVint iela',
-                    'city' => 'Kristoffer Brown',
-                    'country' => 'WildWest',
                     'phone' => '29886586',
                     'email' => 'west@brown.lv'
                 ]);
@@ -63,9 +63,10 @@ class InvoiceController extends Controller
                 $owner = new Owner([
                     'name' => $invoiceDetail->client_name,
                     'address' => $invoiceDetail->factadress,
-                    'city' => $invoiceDetail->factadress,
-                    //'country' => 'Kristoffer Brown',
-                    // /'phone' => '29886586',
+                    // hardcode - city is represntative name + it job description is country ( :( )
+                    'city' => $invoiceDetail->namelastname,
+                    'country' => $invoiceDetail->jobtitle,
+                    // 'phone' => '29886586',
                     //'email' => 'kristoffer@brown.lv'
                 ]);
 
@@ -75,17 +76,19 @@ class InvoiceController extends Controller
 
                 $absoluteInvoiceTotal = 0;
 
-                foreach ($productProcessor as $key => $productIntro) {
+                if ($productProcessor && is_array($productProcessor)){
+                    foreach ($productProcessor as $key => $productIntro) {
 
-                    $absoluteInvoiceTotal = $absoluteInvoiceTotal + $productIntro['allqty-price'];
+                        $absoluteInvoiceTotal = $absoluteInvoiceTotal + $productIntro['allqty-price'];
 
-                    $productCollectionPack[] = array(
-                        'sku' => md5($productIntro['name']),
-                        'name' => $productIntro['name'],
-                        'quantity' => $productIntro['quantity'],
-                        'unit_price' => $productIntro['oqty-price'].' €',
-                        'total' => $productIntro['allqty-price'].' €'
-                    );
+                        $productCollectionPack[] = array(
+                            'sku' => md5($productIntro['name']),
+                            'name' => $productIntro['name'],
+                            'quantity' => $productIntro['quantity'],
+                            'unit_price' => $productIntro['oqty-price'].' €',
+                            'total' => $productIntro['allqty-price'].' €'
+                        );
+                    }
                 }
 
                 $products = new ProductCollection($productCollectionPack);
@@ -97,8 +100,13 @@ class InvoiceController extends Controller
                 $transaction = new Transaction([
                     'id' => $id,
                     'subtotal' => $absoluteInvoiceTotal,
+                    //delivery person name is discount [hardcode]
+                    'delivery' => json_encode(array(
+                        'type' => $invoiceDetail->{'delivery-type'} ,
+                        'method' => $invoiceDetail->{'delivery-method'},
+                        'sum_name' => $invoiceDetail->{'price-name'}
+                    ) , true),
                     'discount' => 0,
-                    'delivery' => 0,
                     'tax' => $tax,
                     'total' => $taxSum + $absoluteInvoiceTotal,
                     'created_at' => Carbon::now(),
@@ -109,12 +117,18 @@ class InvoiceController extends Controller
                 $invoice->useCurrency('USD');
                 $invoice->useView('receipt');
 
-                return $invoice->download();
-                //return $invoice->view();
+                if ($request->has('color') && $request->get('color') == 1){ 
+                    return $invoice->download();
+                    return $invoice->view();
+                }
 
-                // $mpdf = new Mpdf();
-                // $mpdf->WriteHTML('<h1>Hello world!</h1>');
-                // $mpdf->Output();
+                $mpdf = new Mpdf();
+
+                // /dd(get_class_methods($mpdf));
+                $mpdf->AddSpotColor('PANTONE 534 EC',85,65,47,9); 
+
+                $mpdf->WriteHTML($invoice->view());
+                $mpdf->Output();
             }
         }
     }
