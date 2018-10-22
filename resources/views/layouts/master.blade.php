@@ -31,6 +31,7 @@
               <li><a href="{{url('client')}}"><i class="fa fa-group"></i> <span>Clients</span></a></li>
               <li><a href="{{url('product')}}"><i class="fa fa-cube"></i> <span>Product</span></a></li>
               <li><a href="{{url('invoice')}}"><i class="fa  fa-files-o"></i> <span>Invoices</span></a></li>
+              <li><a href="{{url('settings')}}"><i class="fa fa-gears"></i> <span>Settings</span></a></li>
             </ul>
 
           </div>

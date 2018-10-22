@@ -31,3 +31,4 @@ Route::resource('invoice','InvoiceController');
 
 Route::get('/gen/invoice/{id}', 'InvoiceController@generator')->name('generator');
 
+Route::resource('settings','SettingsController');
