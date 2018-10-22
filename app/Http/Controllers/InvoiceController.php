@@ -40,60 +40,83 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function generator()
+    public function generator($id = false)
     {
 
-        $faker = new Faker();
+        if ($id){
+            $processedInvoice = invoice::where('id' , $id);
 
-        $vendor = new Vendor([
-            'name' => 'Kristoffer Brown',
-            'address' => 'Kristoffer Brown',
-            'city' => 'Kristoffer Brown',
-            'country' => 'Kristoffer Brown',
-            'phone' => '29886586',
-            'email' => 'kristoffer@brown.lv'
-        ]);
+            if ($processedInvoice->count() > 0){
 
-        $owner = new Owner([
-            'name' => 'Kristoffer Brown',
-            'address' => 'Kristoffer Brown',
-            'city' => 'Kristoffer Brown',
-            'country' => 'Kristoffer Brown',
-            'phone' => '29886586',
-            'email' => 'kristoffer@brown.lv'
-        ]);
+                $invoiceDetail = $processedInvoice->first();
 
-        $products = new ProductCollection([
-            [
-                'sku' => '5168834966240078',
-                'name' => 'Kristoffer Brown',
-                'quantity' => 1,
-                'unit_price' => '92,10 €',
-                'total' => '92,10 €',
-            ]
-        ]);
 
-        $transaction = new Transaction([
-            'id' => 'zikurats-abele',
-            'subtotal' => 9210,
-            'discount' => 0,
-            'delivery' => 350,
-            'tax' => 0,
-            'total' => 9560,
-            'created_at' => Carbon::now(),
-        ]);
+                $vendor = new Vendor([
+                    'name' => 'WestVint',
+                    'address' => 'WestVint iela',
+                    'city' => 'Kristoffer Brown',
+                    'country' => 'WildWest',
+                    'phone' => '29886586',
+                    'email' => 'west@brown.lv'
+                ]);
 
-        $invoice = new GenInvoice($vendor, $owner, $products, $transaction);
-        $invoice->useLocale('en_US');
-        $invoice->useCurrency('USD');
-        $invoice->useView('receipt');
+                $owner = new Owner([
+                    'name' => $invoiceDetail->client_name,
+                    'address' => $invoiceDetail->factadress,
+                    'city' => $invoiceDetail->factadress,
+                    //'country' => 'Kristoffer Brown',
+                    // /'phone' => '29886586',
+                    //'email' => 'kristoffer@brown.lv'
+                ]);
 
-        return $invoice->download();
-        //return $invoice->view();
+                $productProcessor =  json_decode($invoiceDetail->product_list , true);
 
-        // $mpdf = new Mpdf();
-        // $mpdf->WriteHTML('<h1>Hello world!</h1>');
-        // $mpdf->Output();
+                $productCollectionPack = array();
+
+                $absoluteInvoiceTotal = 0;
+
+                foreach ($productProcessor as $key => $productIntro) {
+
+                    $absoluteInvoiceTotal = $absoluteInvoiceTotal + $productIntro['allqty-price'];
+
+                    $productCollectionPack[] = array(
+                        'sku' => md5($productIntro['name']),
+                        'name' => $productIntro['name'],
+                        'quantity' => $productIntro['quantity'],
+                        'unit_price' => $productIntro['oqty-price'].' €',
+                        'total' => $productIntro['allqty-price'].' €'
+                    );
+                }
+
+                $products = new ProductCollection($productCollectionPack);
+
+                // pvp is and nav ! pagaidam Hardcoded
+                $tax = 18;
+                $taxSum = ($absoluteInvoiceTotal/100) * $tax;
+
+                $transaction = new Transaction([
+                    'id' => $id,
+                    'subtotal' => $absoluteInvoiceTotal,
+                    'discount' => 0,
+                    'delivery' => 0,
+                    'tax' => $tax,
+                    'total' => $taxSum + $absoluteInvoiceTotal,
+                    'created_at' => Carbon::now(),
+                ]);
+
+                $invoice = new GenInvoice($vendor, $owner, $products, $transaction);
+                $invoice->useLocale('en_US');
+                $invoice->useCurrency('USD');
+                $invoice->useView('receipt');
+
+                return $invoice->download();
+                //return $invoice->view();
+
+                // $mpdf = new Mpdf();
+                // $mpdf->WriteHTML('<h1>Hello world!</h1>');
+                // $mpdf->Output();
+            }
+        }
     }
     /**
      * Display a listing of the resource.
