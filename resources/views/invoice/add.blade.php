@@ -223,7 +223,7 @@
                   <input type="text" class="form-control" name="" id="person" disabled="" placeholder="Alvis Bukovskis">
                 </div>
 
-                <input type="hidden" name="vendor_representative" value="Alvis Bukovskis">                
+                <input type="hidden" name="vendor_representative" value="Alvis Bukovskis">
 
                 <div class="form-group col-md-3">
                   <label for="qty">Datums</label>
