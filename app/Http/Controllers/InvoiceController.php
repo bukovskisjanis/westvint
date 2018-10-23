@@ -52,20 +52,29 @@ class InvoiceController extends Controller
 
                 $vendor = new Vendor([
                     // hardcode - city is represntative name + it job description is country ( :( )
-                    'city' =>  $invoiceDetail->vendor_representative ,
-                    'country' => $invoiceDetail->vendor_jobtitle,
-                    'name' => $invoiceDetail->vendor_company,
+                    //'city' =>  $invoiceDetail->vendor_representative ,
+                    //'country' => $invoiceDetail->vendor_jobtitle,
+                    'name' => json_encode(
+                        array(
+                            'vendor_company' => $invoiceDetail->vendor_company,
+                            'vendor_representative' => $invoiceDetail->vendor_representative ,
+                            'vendor_jobtitle'  => $invoiceDetail->vendor_jobtitle 
+                        )
+                    ),
                     'address' => 'WestVint iela',
                     'phone' => '29886586',
                     'email' => 'west@brown.lv'
                 ]);
 
                 $owner = new Owner([
-                    'name' => $invoiceDetail->client_name,
+                    'name' => json_encode(
+                        array(
+                            'client_company' => $invoiceDetail->client_name,
+                            'client_representative' => $invoiceDetail->namelastname,
+                            'client_jobtitle' => $invoiceDetail->jobtitle
+                        )
+                    ),
                     'address' => $invoiceDetail->factadress,
-                    // hardcode - city is represntative name + it job description is country ( :( )
-                    'city' => $invoiceDetail->namelastname,
-                    'country' => $invoiceDetail->jobtitle,
                     // 'phone' => '29886586',
                     //'email' => 'kristoffer@brown.lv'
                 ]);

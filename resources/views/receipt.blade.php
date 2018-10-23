@@ -118,7 +118,7 @@
     <div class="row invoice-info invoice-padding">
       <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="address text-left">
-                <span>Nosūtītājs:</span>{{ $vendor->name }}<br>
+                <span>Nosūtītājs:</span>{{ json_decode($vendor->name , true)['vendor_company'] }}<br>
                 <span>Juridiskā adrese:</span>{{ $vendor->address }}<br>
                 <span>Reģ.Nr.:</span ><br>
                 <span>PVN reģ.nr.:</span><br>
@@ -131,7 +131,7 @@
       <!-- /.col -->
       <div class="col-sm-6 col-md-6 col-lg-6">
         <div class="address text-right">
-            <span>Saņēmējs</span>{{ $owner->name }}<br>
+            <span>Saņēmējs</span>{{ json_decode($owner->name , true)['client_company'] }}<br>
             <span>Juridiskā adrese:</span>{{ $owner->address }}<br>
             <span>Reģ.Nr.:</span><br>
             <span>PVN reģ.nr.:</span><br>
@@ -221,18 +221,17 @@
       <div class="col-sm-6 col-md-6">
             <div class="address text-left">
                 <span>Summa kopā vārdiem EUR:</span>{{ json_decode($transaction->delivery , true)['sum_name'] }}<br>
-                <span>Izsniedza:</span>   {{ $vendor->name }}<br>
-                <span>{{ $vendor->country }}:</span>   ....................................<br>
-                <span>Vārds Uzvārds:</span>  {{ $vendor->city }} <br>
+                <span>Izsniedza:</span>   {{ json_decode($vendor->name , true)['vendor_company'] }}<br>
+                <span>{{ json_decode($vendor->name , true)['vendor_jobtitle'] }} :</span>   ....................................<br>
+                <span>Vārds Uzvārds:</span>  {{ json_decode($vendor->name , true)['vendor_representative'] }} <br>
                 <span>{{ $transaction->createdAt }}</span><br>
             </div>
       </div>
       <!-- /.col -->
       <div class="col-sm-6 col-md-6">
         <div class="address text-right">
-            <span>Saņēmējs:</span>   {{ $owner->name }} <br>
-            <span>Vārds Uzvārds:</span> {{ $owner->city }} <br>
-            <span>Amats:</span> {{ $owner->country }} <br>
+            <span>Vārds Uzvārds:</span> {{ json_decode($owner->name , true)['client_representative'] }} <br>
+            <span>Amats:</span> {{ json_decode($owner->name , true)['client_jobtitle'] }} <br>
             <span>Paraksts:</span>   ....................................<br>
             <span>{{ $transaction->createdAt }}</span><br>
         </div>
