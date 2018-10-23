@@ -143,7 +143,7 @@
                 </tr>
                 @endforeach
 
-                      <tr>
+<!--                       <tr>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -167,7 +167,7 @@
                         <td>
                             <button type="button" class="btn btn-delete btn-flat"><i class="fa  fa-file-pdf-o"></i></button>
                         <delete>
-                      </tr>
+                      </tr> -->
                   </tbody>
               </table>
   </div>

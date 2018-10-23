@@ -7,6 +7,7 @@
   $(function() {
     $('.product_add_button').click(productAdd);
 
+
     function productAdd(){
       console.log('addin new');
       $(".invoice_lead_row").append(
@@ -14,6 +15,12 @@
       );
       $('.killall').unbind('click');
       $('.killall').click(killAll);
+
+      $('.articul_product_selector').unbind('change');
+      $('.articul_product_selector').change(productChangeInfo);
+
+      $('.product_quantity').unbind('change');
+      $('.product_quantity').change(productCountChange);
     }
 
     function killAll(){
@@ -25,7 +32,77 @@
     }
 
 
+    function productChangeInfo(){
+        console.log('prodCXhanfge');
+        if ($(this).val() > 0){
+          productData = JSON.parse($('option:selected', this).attr('details')); 
+          console.log( $(this).parent().parent());
+          $(this).parent().parent().find('.product').val(productData.name);
+          $(this).parent().parent().find('.oqty-price').val(productData.product_price);
+        }else{
+          $(this).parent().parent().find('.product').val('');
+          $(this).parent().parent().find('.oqty-price').val('');
+        }
+    
+    }
+
+
+    $('.articul_product_selector').change(productChangeInfo);
+
+    function productCountChange(){
+        if ($(this).val() > 0){
+          pricePerOne = $(this).parent().parent().find('.oqty-price').val();
+          pricePerAll = (pricePerOne * $(this).val());
+          $(this).parent().parent().find('.allqty-price').val(pricePerAll);
+        }else{
+          $(this).parent().parent().find('.allqty-price').val(0);
+        }
+    }
+
+    $('.product_quantity').change(productCountChange);
+
     $('.killall').click(killAll);
+
+
+    //change of represntative details
+    $('#vendor_representative').change(function(){
+        if ($(this).val() > 0){
+          console.log($('option:selected', this).attr('related_job_title'));
+          $('#vendor_jobtitle_hidden').val($('option:selected', this).attr('related_job_title'));
+          $('#vendor_jobtitle').val($('option:selected', this).attr('related_job_title'));
+        }else{
+          $('#vendor_jobtitle_hidden').val('');
+          $('#vendor_jobtitle').val('');          
+        }
+    });
+
+
+    $('#client_select').change(
+      function(){
+        if ($(this).val() > 0){
+          clientData = JSON.parse($('option:selected', this).attr('details'));
+          console.log(clientData);
+          $('#devadress').val(clientData.devadress);
+          $('#factadress').val(clientData.factadress);
+          $('#regnr').val(clientData.regnr);
+          $('#pvnregnr').val(clientData.pvnregnr);
+          $('#bankname').val(clientData.bankname);
+          $('#bankcode').val(clientData.bankcode);
+          $('#bankaccnr').val(clientData.bankaccnr);
+          $('#client_name').val(clientData.name);
+        }else{
+          $('#devadress').val('');
+          $('#factadress').val('');
+          $('#regnr').val('');
+          $('#pvnregnr').val('');
+          $('#bankname').val('');
+          $('#bankcode').val('');
+          $('#bankaccnr').val('');
+          $('#client_name').val('');
+        }
+      }
+    );
+
   });
 </script>
 
@@ -35,14 +112,11 @@
           <div class="col-md-2 col-lg-3">
             <div class="form-group">
               <label>Saņēmējs</label>
-              <select class="form-control select2" style="width: 100%;">
-                <option selected="selected">Alabama</option>
-                <option>Alaska</option>
-                <option>California</option>
-                <option>Delaware</option>
-                <option>Tennessee</option>
-                <option>Texas</option>
-                <option>Washington</option>
+              <select id="client_select" class="form-control select2" style="width: 100%;">
+                <option value=0 >----</option>
+                @foreach($clients as $client)
+                  <option value="{{$client->id}}" details="{{json_encode($client)}}">{{$client->name}}</option>
+                @endforeach
               </select>
             </div>
           </div>
@@ -123,31 +197,28 @@
             <div class="col-md-12 invoice-line hidden hidden_product_line">
                 <div class="form-group col-md-2">
                   <label for="articul">Artikuls</label>
-                  <select class="form-control select2" style="width: 100%;"name="articul" id="articul">
-                    <option selected="selected">Alabama</option>
-                    <option>Alaska</option>
-                    <option>California</option>
-                    <option>Delaware</option>
-                    <option>Tennessee</option>
-                    <option>Texas</option>
-                    <option>Washington</option>
+                  <select class="form-control select2 articul_product_selector" style="width: 100%;"name="articul" class="articul">
+                    <option selected="selected">-----</option>
+                    @foreach($products as $product)
+                      <option value="{{$product->id}}" details="{{json_encode($product)}}" >{{ $product->articul}}</option>
+                    @endforeach
                   </select>
                 </div>
                 <div class="form-group col-md-4">
                   <label for="product">Produkts</label>
-                  <input type="text" class="form-control" name="product[]" id="product">
+                  <input type="text" class="form-control product" name="product[]">
                 </div>
                 <div class="form-group col-md-1">
                   <label for="qty">Daudzums</label>
-                  <input type="text" class="form-control" name="qty[]" id="qty">
+                  <input type="text" class="form-control qty product_quantity" name="qty[]">
                 </div>
                 <div class="form-group col-md-2">
                   <label for="oqty-price">Vienības cena bez PVN</label>
-                  <input type="text" class="form-control" name="oqty-price[]" id="oqty-price">
+                  <input type="text" class="form-control oqty-price" name="oqty-price[]">
                 </div>
                 <div class="form-group col-md-2">
                   <label for="allqty-price">Kopējā cena bez PVN</label>
-                  <input type="text" class="form-control" name="allqty-price[]" id="allqty-price">
+                  <input type="text" class="form-control allqty-price" name="allqty-price[]">
                 </div>
                 <div class="col-md-1 col-lg-1 form-group">
                   <label>Settings</label>
@@ -158,31 +229,29 @@
             <div class="col-md-12 invoice-line ">
                 <div class="form-group col-md-2">
                   <label for="articul">Artikuls</label>
-                  <select class="form-control select2" style="width: 100%;"name="articul" id="articul">
-                    <option selected="selected">Alabama</option>
-                    <option>Alaska</option>
-                    <option>California</option>
-                    <option>Delaware</option>
-                    <option>Tennessee</option>
-                    <option>Texas</option>
-                    <option>Washington</option>
+                  <select class="form-control select2 articul_product_selector" style="width: 100%;"name="articul">
+                    <option selected="selected">-----</option>
+                    @foreach($products as $product)
+                      <option value="{{$product->id}}" details="{{json_encode($product)}}" >{{ $product->articul}}</option>
+                    @endforeach
                   </select>
+
                 </div>
                 <div class="form-group col-md-4">
                   <label for="product">Produkts</label>
-                  <input type="text" class="form-control" name="product" id="product">
+                  <input type="text" class="form-control product" name="product[]">
                 </div>
                 <div class="form-group col-md-1">
                   <label for="qty">Daudzums</label>
-                  <input type="text" class="form-control" name="qty" id="qty">
+                  <input type="text" class="form-control qty product_quantity" name="qty[]">
                 </div>
                 <div class="form-group col-md-2">
                   <label for="oqty-price">Vienības cena bez PVN</label>
-                  <input type="text" class="form-control" name="oqty-price" id="oqty-price">
+                  <input type="text" class="form-control oqty-price" name="oqty-price[]">
                 </div>
                 <div class="form-group col-md-2">
                   <label for="allqty-price">Kopējā cena bez PVN</label>
-                  <input type="text" class="form-control" name="allqty-price" id="allqty-price">
+                  <input type="text" class="form-control allqty-price" name="allqty-price[]">
                 </div>
                 <div class="col-md-1 col-lg-1 form-group">
                   <label>Settings</label>
@@ -210,20 +279,21 @@
                 <input type="hidden" name="vendor_company" value="WestVint">
 
                 <div class="form-group col-md-2">
-                  <label for="jobtitle">Amats</label>
-                  <select class="form-control select2" style="width: 100%;"name="vendor_jobtitle" id="jobtitle">
-                    <option selected="selected">Valdes loceklis</option>
-                    <option>Valdes priekšsēdētājs</option>
+                  <label for="vendor_representative">Vārds Uzvārds</label>
+                  <select class="form-control select2" style="width: 100%;"name="vendor_representative" id="vendor_representative">
+                    <option value="0" selected="selected"> -none- </option>
+                    @foreach($settings as $settingItem)
+                      <option value="{{ $settingItem->id }}" related_job_title="{{ $settingItem->westvint_persstatuss }}" >{{ $settingItem->westvint_person }}</option>
+                    @endforeach
                   </select>
                 </div>
 
-
                 <div class="form-group col-md-2">
-                  <label for="qty">Vārds Uzvārds</label>
-                  <input type="text" class="form-control" name="" id="person" disabled="" placeholder="Alvis Bukovskis">
+                  <label for="vendor_jobtitle">Amats</label>
+                  <input type="text" disabled="" class="form-control" name="vendor_jobtitle" id="vendor_jobtitle">
                 </div>
 
-                <input type="hidden" name="vendor_representative" value="Alvis Bukovskis">
+                <input type="hidden" name="vendor_jobtitle" id="vendor_jobtitle_hidden" value="Alvis Bukovskis">
 
                 <div class="form-group col-md-3">
                   <label for="qty">Datums</label>
@@ -243,6 +313,7 @@
                       <label for="jobtitle">Amats</label>
                       <input type="text" class="form-control" name="jobtitle" id="jobtitle">
                     </div>
+
                     <div class="form-group col-md-2">
                       <label for="client-signature">Paraksts</label>
                       <input type="text" class="form-control" name="" id="client-signature" disabled="">

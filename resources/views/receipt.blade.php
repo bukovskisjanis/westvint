@@ -172,9 +172,16 @@
               <th class="text-right" style="width:10%">Cena ar PVN</th>
             </tr>
             
-            @foreach( $products->items() as $product)
+            @foreach( $products->items() as $key =>  $product)
+
+                    <?php
+                      if ($key == 0 ){
+                        continue;
+                      }
+                    ?>
+
                     <tr>
-                      <td class="text-center">1</td>
+                      <td class="text-center">{{ $key }}</td>
                       <td>
                         {{ $product->name }}
                       </td>
@@ -182,18 +189,18 @@
                       <td class="text-center">
                         {{ $product->quantity }}
                       </td>
-                      <td class="text-right">{{ $product->price }}</td>
-                      <td class="text-right">{{ $product->total }}</td>
+                      <td class="text-right">{{ number_format((float)$product->price,2) }}</td>
+                      <td class="text-right">{{ number_format((float)$product->total,2) }}</td>
                     </tr>
             @endforeach
 
             <tr>
               <td colspan="5" class="font-w600 text-right">Cena bez PVN</td>
-              <td class="text-right">{{ $transaction->subtotal}}</td>
+              <td class="text-right">{{ number_format((float)$transaction->subtotal , 2) }}</td>
             </tr>
             <tr>
               <td colspan="5" class="font-w600 text-right">PVN {{ $transaction->tax}}%</td>
-              <td class="text-right"> {{ ($transaction->total - $transaction->subtotal) }} </td>
+              <td class="text-right"> {{ number_format((float)($transaction->total - $transaction->subtotal),2) }} </td>
             </tr>
             <tr>
               <td colspan="5" class="font-w600 text-right"><span>(PVN likuma 142.pants Kods:R9 Īpašais PVN piemeršoanas rēžīms Nodokļa apgrieztā maksāšana)</span></td>
@@ -201,7 +208,7 @@
             </tr>
             <tr>
               <td colspan="5" class="font-weight-bold text-uppercase text-right">Apmaksa</td>
-              <td class="font-weight-bold text-right">{{ $transaction->total}}</td>
+              <td class="font-weight-bold text-right">{{ number_format((float)$transaction->total , 2)}}</td>
             </tr>
           </tbody>
         </table>

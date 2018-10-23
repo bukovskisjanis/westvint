@@ -7,7 +7,7 @@
 			<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#add-client">Add new client</button>
 		</div>
 		<div class="box-body">
-			<table class="table table-responsive  table-bordered table-hover">
+			<table class="table table-responsive  table-bordered table-hover table-display">
               	<thead>
 	                <tr>
 	                  <th>ID</th>

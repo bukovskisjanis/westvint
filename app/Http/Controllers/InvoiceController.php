@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\invoice;
+use App\Settings;
 use App\Products;
+use App\Client;
 use Auth;
 
 use Faker\Generator as Faker;
@@ -94,8 +96,8 @@ class InvoiceController extends Controller
                             'sku' => md5($productIntro['name']),
                             'name' => $productIntro['name'],
                             'quantity' => $productIntro['quantity'],
-                            'unit_price' => $productIntro['oqty-price'].' €',
-                            'total' => $productIntro['allqty-price'].' €'
+                            'price' => $productIntro['oqty-price'],
+                            'total' => $productIntro['allqty-price']
                         );
                     }
                 }
@@ -117,6 +119,7 @@ class InvoiceController extends Controller
                     ) , true),
                     'discount' => 0,
                     'tax' => $tax,
+                    //'price' =>  $invoiceDetail->unit_price,
                     'total' => $taxSum + $absoluteInvoiceTotal,
                     'created_at' => Carbon::now(),
                 ]);
@@ -149,7 +152,11 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoice = invoice::all();
-        return view('invoice.index',compact('invoice'));
+        $settings = Settings::all();
+        $clients = Client::all();
+        $products = Products::all();
+
+        return view('invoice.index',compact('invoice' , 'settings' , 'clients' , 'products'));
     }
 
     /**
