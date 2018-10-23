@@ -7,7 +7,7 @@
     <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#add-settings-person">Add new person</button>
   </div>
   <div class="box-body">
-    <table class="table table-responsive table-hover">
+    <table class="table table-responsive table-hover table-display">
                     <thead>
                       <tr>
                          <th>ID</th>
@@ -20,7 +20,6 @@
                          <th>westvint_bank-code</th>
                          <th>westvint_bank-accnr</th>
                          <th>Westvint-Person</th>
-                         <th>Westvint-Persstatuss</th>
                          <th>Data Settings</th>
                       </tr>
                     </thead>
@@ -29,30 +28,19 @@
                   @foreach($settings as $setting_item)
                 <tr>
                   <td>{{$setting_item->id}}</td>
-                  <td>{{$setting_item->westvint_person}}</td>
-                  <td>{{$setting_item->westvint_person}}</td>
-                  <td>{{$setting_item->westvint_person}}</td>
-                  <td>{{$setting_item->westvint_person}}</td>
-                  <td>{{$setting_item->westvint_person}}</td>
-                  <td>{{$setting_item->westvint_person}}</td>
-                  <td>{{$setting_item->westvint_person}}</td>
-                  <td>{{$setting_item->westvint_person}}</td>
-                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_name}}</td>
+                  <td>{{$setting_item->westvint_persstatuss}}</td>
+                  <td>{{$setting_item->westvint_juradress}}</td>
+                  <td>{{$setting_item->westvint_regnr}}</td>
+                  <td>{{$setting_item->westvint_pvnregnr}}</td>
+                  <td>{{$setting_item->westvint_bank}}</td>
+                  <td>{{$setting_item->{'westvint_bank-code'} }}</td>
+                  <td>{{$setting_item->{'westvint_bank-accnr'} }}</td>
                   <td>{{$setting_item->westvint_person}}</td>
 
                   <td>
                     <div class="btn-group"> 
-                        <button type="button" 
-                          data-empfirstname="{{$setting_item->client_name}}" 
-                          data-empsurname="{{$setting_item->jobtitle}}" 
-                          data-empadress="{{$setting_item->adress}}"  
-                          class="btn btn-edit btn-flat popbutton"
- 
-                          data-toggle="modal" 
-                          data-target="#editdarbinieks">
-                          <i class="fa fa-edit "></i>
-                        </button>
-              <form action="/setti/{{$setting_item->id}}" method="DELETE">
+              <form action="/settings/{{$setting_item->id}}" method="DELETE">
             <button type="submit" class="btn btn-delete btn-flat"><i class="fa fa-times-circle"></i>
               </form>
               </button>
@@ -86,28 +74,6 @@
 
                 </tr>
                 @endforeach
-
-
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                          <div class="btn-group">
-                              <button type="button" class="btn btn-view btn-flat"><i class="fa fa-eye"></i></button>
-                              <button type="button" class="btn btn-edit btn-flat"><i class="fa fa-edit "></i></button>
-                              <button type="button" class="btn btn-delete btn-flat"><i class="fa fa-times-circle"></i></button>
-                          </div>
-                        </td>
-                      </tr>
                   </tbody>
               </table>
   </div>

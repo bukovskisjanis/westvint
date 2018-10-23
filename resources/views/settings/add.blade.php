@@ -1,4 +1,4 @@
-
+				<input type="hidden" name="westvint_name" value="Westwin">
 				<div class="row">
 					<div class="form-group col-md-3">
 						<label for="westvint_person">westvint_person</label>
@@ -18,6 +18,10 @@
 		      		</div>
 				</div>
 				<div class="row">
+		      		<div class="form-group col-md-3">
+						<label for="westvint_pvnregnr">westvint_pvnregnr</label>
+		        		<input type="text" class="form-control" name="westvint_pvnregnr" id="westvint_pvnregnr">
+		      		</div>
 		      		<div class="form-group col-md-3">
 						    <label for="westvint_bank">westvint_bank</label>
 		        		<input type="text" class="form-control" name="westvint_bank" id="westvint_bank" >
