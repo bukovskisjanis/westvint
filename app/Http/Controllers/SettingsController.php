@@ -15,8 +15,8 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        $Settings = Settings::all();
-        return view('settings.index',compact('Settings'));
+        $settings = Settings::all();
+        return view('settings.index',compact('settings'));
     }
 
     /**
@@ -37,7 +37,13 @@ class SettingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $fullRequest = $request->all();
+
+        unset($fullRequest['_token']);
+
+        Settings::create($fullRequest);
+        return back();
     }
 
     /**
@@ -47,8 +53,11 @@ class SettingsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    { 
+        //@fix nedaģelka
+        if (Settings::where('id' , $id)->first()->delete()){
+            return back();            
+        }
     }
 
     /**

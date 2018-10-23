@@ -26,7 +26,66 @@
                     </thead>
                     <tbody>
 
+                  @foreach($settings as $setting_item)
+                <tr>
+                  <td>{{$setting_item->id}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
+                  <td>{{$setting_item->westvint_person}}</td>
 
+                  <td>
+                    <div class="btn-group"> 
+                        <button type="button" 
+                          data-empfirstname="{{$setting_item->client_name}}" 
+                          data-empsurname="{{$setting_item->jobtitle}}" 
+                          data-empadress="{{$setting_item->adress}}"  
+                          class="btn btn-edit btn-flat popbutton"
+ 
+                          data-toggle="modal" 
+                          data-target="#editdarbinieks">
+                          <i class="fa fa-edit "></i>
+                        </button>
+              <form action="/setti/{{$setting_item->id}}" method="DELETE">
+            <button type="submit" class="btn btn-delete btn-flat"><i class="fa fa-times-circle"></i>
+              </form>
+              </button>
+
+              <div class="modal modal-danger fade" id="deletedarbinieks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-long" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h2 class="modal-title text-center" id="exampleModalLabel">Delete Employee Profile</h2>
+
+                    </div>
+                    <form action="/invoice/{{$setting_item->id}}" method="DELETE">
+                      {{method_field('destroy')}}
+                        {{csrf_field()}}
+                      <div class="modal-body modal-delete-body">
+                        <p class="text-center">
+                          Are you sure you want to delete this?
+
+                                  </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Don't Delete</button>
+                        <button type="submit" class="btn btn-primary">Yes,Delete</button>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div></div>
+           </td>
+
+                </tr>
+                @endforeach
 
 
                       <tr>
@@ -60,7 +119,8 @@
           <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
           <h2 class="modal-title" id="exampleModalLabel">Add new Invoice</h2>
         </div>
-        <form  method="post">
+      <form action="{{route('settings.store')}}" method="post">
+        {{csrf_field()}}
          <div class="modal-body">
        @include('settings.add')
   	      <div class="modal-footer">
