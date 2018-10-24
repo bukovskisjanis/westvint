@@ -32,6 +32,7 @@
               <li><a href="{{url('product')}}"><i class="fa fa-cube"></i> <span>Product</span></a></li>
               <li><a href="{{url('invoice')}}"><i class="fa  fa-files-o"></i> <span>Invoices</span></a></li>
               <li><a href="{{url('settings')}}"><i class="fa fa-gears"></i> <span>Settings</span></a></li>
+              <li><a href="{{url('history')}}"><i class="fa fa-history"></i> <span>History data</span></a></li>
             </ul>
 
           </div>
@@ -91,10 +92,9 @@
   <footer class="main-footer">
       <div class="container">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 2.4.0
+          <b>Version</b> WV 1.0.1 BETA DEMO
         </div>
-        <strong>Copyright © 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-        reserved.
+        <strong>All rights reserved <a>DE-FONTE GROUP</a>.</strong>
       </div>
       <!-- /.container -->
     </footer>
