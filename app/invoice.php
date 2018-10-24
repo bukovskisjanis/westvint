@@ -33,7 +33,11 @@ class invoice extends Model
         'vendor_jobtitle',
         'moreinfo',
         'total_netto' ,
-        'total_brutto'
+        'total_brutto',
+        'total_sum',
+        'last_editor',
+        'creator_name',
+        'creator_id'
     	];
 
 }

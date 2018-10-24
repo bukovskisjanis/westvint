@@ -209,6 +209,8 @@ class InvoiceController extends Controller
 
         $productListArray = array();
 
+        $invoiceTotal = 0;
+
         foreach ($fullRequest['product'] as $productInstanceKey => $productInstance) {
             $productListArray[] = array(
                 'code' => $fullRequest['hidden_articul'][$productInstanceKey],
@@ -217,9 +219,17 @@ class InvoiceController extends Controller
                 'oqty-price' => $fullRequest['oqty-price'][$productInstanceKey],
                 'allqty-price' => $fullRequest['allqty-price'][$productInstanceKey]
             );
+
+            ///
+            $invoiceTotal = (float)$fullRequest['allqty-price'][$productInstanceKey] + (float)$invoiceTotal;
         }
 
         $fullRequest['product_list'] = json_encode($productListArray);
+        $fullRequest['total_sum'] = $invoiceTotal;
+        $fullRequest['last_editor'] = Auth::user()->name;
+
+        $fullRequest['creator_name'] = Auth::user()->name;
+        $fullRequest['creator_id'] = Auth::user()->id;
 
         //remove direct miracles
         unset($fullRequest['articul']);

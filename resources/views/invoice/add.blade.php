@@ -5,6 +5,11 @@
 
 <script type="text/javascript">
   $(function() {
+    //invoice edit procedure
+    
+
+
+    //invoice product procedures
     $('.product_add_button').click(productAdd);
 
 

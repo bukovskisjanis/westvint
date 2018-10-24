@@ -71,7 +71,6 @@
                          <th>Start date</th>
                          <th>Due date</th>
                          <th>Invoice Statuss</th>
-                         <th>Invoice date</th>
                          <th>Price</th>
                          <th>Invoice created by</th>
                          <th>Edit date</th>
@@ -87,14 +86,13 @@
                 <tr>
                   <td>{{$invoice_item->id}}</td>
                   <td>{{$invoice_item->client_name}}</td>
-                  <td>Add this please</td>
-                  <td>Add this please</td>
-                  <td>Created !!!Nav apraskta par Statusu maiņu un piesaistīto biznesa loģiku. Vai tas iet kopā ar `labojumu` loģiku. Ja ja , kur glabat labojumu statistiku !? + čali - frontEnd bags , un liels , tas teksts sarakstīts šada garumā izskatās pēc reāla sūda :D</td>
-                  <td>Summa ktkā paskrēja garām</td>
-                  <td>{{$invoice_item->jobtitle}}</td>
+                  <td>{{$invoice_item->created_at}}</td>
+                  <td>{{$invoice_item->{'payment-date'} }}</td>
+                  <td>Created </td>
+                  <td>{{$invoice_item->total_sum}}</td>
+                  <td>{{$invoice_item->creator_name}}</td>
                   <td>{{$invoice_item->updated_at}}</td>
-                  <td>Nav apraksta par labojumu uzskaitēs biznesa loģiku</td>
-                  <td>kas elle rata ir Data Settings ? </td>
+                  <td>{{$invoice_item->last_editor}}</td>
                   <td><a href="/gen/invoice/{{$invoice_item->id}}"><i class="fa  fa-file-pdf-o"></i></a> </td>
                   <td>
                     <div class="btn-group"> 
@@ -102,8 +100,8 @@
                           data-empfirstname="{{$invoice_item->client_name}}" 
                           data-empsurname="{{$invoice_item->jobtitle}}" 
                           data-empadress="{{$invoice_item->adress}}"  
-                          class="btn btn-edit btn-flat popbutton"
- 
+                          class="product_edit_buttonbtn btn-edit btn-flat popbutton"
+                          product_id={{$invoice_item->id}}
                           data-toggle="modal" 
                           data-target="#editdarbinieks">
                           <i class="fa fa-edit "></i>
