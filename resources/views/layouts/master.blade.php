@@ -42,7 +42,8 @@
             <ul class="nav navbar-nav">
               <li class="dropdown user user-menu">
                 <!-- Menu Toggle Button -->
-                <a href="/logout" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                 <!-- class="dropdown-toggle" data-toggle="dropdown" -->
+                <a href="/logout" aria-expanded="false">
                   <!-- The user image in the navbar-->
                   <img src="{{asset('images/user1-128x128.jpg')}}" class="user-image" alt="User Image">
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
