@@ -35,7 +35,7 @@
     function productChangeInfo(){
         console.log('prodCXhanfge');
         if ($(this).val() > 0){
-          productData = JSON.parse($('option:selected', this).attr('details')); 
+          productData = JSON.parse($('option:selected', this).attr('details'));
           console.log( $(this).parent().parent());
           $(this).parent().parent().find('.product').val(productData.name);
           $(this).parent().parent().find('.oqty-price').val(productData.product_price);
@@ -43,7 +43,7 @@
           $(this).parent().parent().find('.product').val('');
           $(this).parent().parent().find('.oqty-price').val('');
         }
-    
+
     }
 
 
@@ -72,7 +72,7 @@
           $('#vendor_jobtitle').val($('option:selected', this).attr('related_job_title'));
         }else{
           $('#vendor_jobtitle_hidden').val('');
-          $('#vendor_jobtitle').val('');          
+          $('#vendor_jobtitle').val('');
         }
     });
 
@@ -261,10 +261,18 @@
         </div>
 				<div class="row">
             <div class="col-md-12 invoice-line">
-                <div class="form-group col-md-12">
-                  <label for="moreinfo">Piezīmes</label>
-                  <input type="text" class="form-control" name="moreinfo" id="moreinfo">
-                </div>
+                  <div class="form-group col-md-7">
+                      <label for="moreinfo">Piezīmes</label>
+                      <input type="text" class="form-control" name="moreinfo" id="moreinfo">
+                  </div>
+                      <div class="form-group col-md-3">
+                        <label for="">Neto masa</label>
+                        <input type="text" class="form-control" name="" id="">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="">Bruto masa</label>
+                        <input type="text" class="form-control" name="" id="">
+                      </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group col-md-3">
@@ -300,28 +308,28 @@
                   <input type="text" class="form-control" name="" id="invoice-date-writen">
                 </div>
             </div>
-                <div class="col-md-12">
-                    <div class="form-group col-md-3">
-                      <label for="client_name">Saņēmējs</label>
-                      <input type="text" class="form-control" name="client_name" id="client_name">
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label for="product">Vārds Uzvārds</label>
-                      <input type="text" class="form-control" name="namesurname" id="namesurname">
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label for="jobtitle">Amats</label>
-                      <input type="text" class="form-control" name="jobtitle" id="jobtitle">
-                    </div>
-
-                    <div class="form-group col-md-2">
-                      <label for="client-signature">Paraksts</label>
-                      <input type="text" class="form-control" name="" id="client-signature" disabled="">
-                    </div>
-                    <div class="form-group col-md-3">
-                      <label for="qty">Datums</label>
-                      <input type="text" class="form-control" name="" id="invoice-date-writen">
-                    </div>
+            <div class="col-md-12">
+                <div class="form-group col-md-3">
+                  <label for="client_name">Saņēmējs</label>
+                  <input type="text" class="form-control" name="client_name" id="client_name">
                 </div>
+                <div class="form-group col-md-2">
+                  <label for="product">Vārds Uzvārds</label>
+                  <input type="text" class="form-control" name="namesurname" id="namesurname">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="jobtitle">Amats</label>
+                  <input type="text" class="form-control" name="jobtitle" id="jobtitle">
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label for="client-signature">Paraksts</label>
+                  <input type="text" class="form-control" name="" id="client-signature" disabled="">
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="qty">Datums</label>
+                  <input type="text" class="form-control" name="" id="invoice-date-writen">
+                </div>
+            </div>
       </div>
     </div>
