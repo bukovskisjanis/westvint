@@ -107,7 +107,7 @@
       <!-- /.col -->
     </div>
     <div class="row invoice-info invoice-padding">
-      <div class="col-sm-12 col-md-12 company-border">
+      <div class="col-xs-6 col-sm-12 col-md-12 company-border">
             <div class="address text-left">
                   <span>Pavadzīmes nr:</span> {{ $transaction->id }} <br>
                   <span>Izrakstīšanas datums:</span> {{ $transaction->createdAt }} <br>
@@ -116,7 +116,7 @@
     </div>
     <!-- info row -->
     <div class="row invoice-info invoice-padding">
-      <div class="col-sm-6 col-md-6 col-lg-6">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <div class="address text-left">
                 <span>Nosūtītājs:</span>{{ json_decode($vendor->name , true)['vendor_company'] }}<br>
                 <span>Juridiskā adrese:</span>{{ $vendor->address }}<br>
@@ -225,7 +225,7 @@
       </div>
     </div>
     <div class="row invoice-info invoice-padding invoice-line">
-      <div class="col-sm-6 col-md-6">
+      <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="address text-left">
                 <span>Summa kopā vārdiem EUR:</span>{{ json_decode($transaction->delivery , true)['sum_name'] }}<br>
                 <span>Izsniedza:</span>   {{ json_decode($vendor->name , true)['vendor_company'] }}<br>
