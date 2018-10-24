@@ -52,18 +52,32 @@ class InvoiceController extends Controller
 
                 $invoiceDetail = $processedInvoice->first();
 
+                $jobTitleSettings = Settings::where('id' , $invoiceDetail->vendor_representative);
+
+                if ($jobTitleSettings->count() > 0){
+                    $jobTitleSettingsItem = $jobTitleSettings->first();
+                }else{
+                    $jobTitleSettingsItem = new Settings();
+                }
+
                 $vendor = new Vendor([
                     // hardcode - city is represntative name + it job description is country ( :( )
                     //'city' =>  $invoiceDetail->vendor_representative ,
-                    //'country' => $invoiceDetail->vendor_jobtitle,
+                    //'country' => $invoiceDetail->vendor_jobtitle, jobTitleSettingsItem->westvint_persstatuss
                     'name' => json_encode(
                         array(
                             'vendor_company' => $invoiceDetail->vendor_company,
                             'vendor_representative' => $invoiceDetail->vendor_representative ,
-                            'vendor_jobtitle'  => $invoiceDetail->vendor_jobtitle 
+                            'vendor_jobtitle'  => $jobTitleSettingsItem->westvint_persstatuss ,
+                            'vendor_reg_nr' => $jobTitleSettingsItem->westvint_regnr,
+                            'westvint_juradress' => $jobTitleSettingsItem->westvint_juradress,
+                            'vendor_pvnregnr' => $jobTitleSettingsItem->westvint_pvnregnr ,
+                            'vendor_westvint_bank' => $jobTitleSettingsItem->westvint_bank,
+                            'vendor_bank_code' => $jobTitleSettingsItem->{'westvint_bank-code'},
+                            'vendor_bank_accnr' => $jobTitleSettingsItem->{'westvint_bank-accnr'}
                         )
                     ),
-                    'address' => 'WestVint iela',
+                    'address' => $jobTitleSettingsItem->westvint_juradress,
                     'phone' => '29886586',
                     'email' => 'west@brown.lv'
                 ]);
@@ -73,7 +87,13 @@ class InvoiceController extends Controller
                         array(
                             'client_company' => $invoiceDetail->client_name,
                             'client_representative' => $invoiceDetail->namelastname,
-                            'client_jobtitle' => $invoiceDetail->jobtitle
+                            'client_jobtitle' => $invoiceDetail->jobtitle,
+                            'client_regnr' => $invoiceDetail->regnr,
+                            'client_pvnregnr' => $invoiceDetail->pvnregnr,
+                            'client_bankname' => $invoiceDetail->bankname,
+                            'client_bankcode' => $invoiceDetail->bankcode,
+                            'client_bankaccnr' => $invoiceDetail->bankaccnr,
+                            'client_devadress' => $invoiceDetail->devadress,
                         )
                     ),
                     'address' => $invoiceDetail->factadress,
@@ -115,7 +135,8 @@ class InvoiceController extends Controller
                     'delivery' => json_encode(array(
                         'type' => $invoiceDetail->{'delivery-type'} ,
                         'method' => $invoiceDetail->{'delivery-method'},
-                        'sum_name' => $invoiceDetail->{'price-name'}
+                        'sum_name' => $invoiceDetail->{'price-name'},
+                        'notes' => $invoiceDetail->moreinfo
                     ) , true),
                     'discount' => 0,
                     'tax' => $tax,
@@ -197,7 +218,6 @@ class InvoiceController extends Controller
 
         //remove direct miracles
         unset($fullRequest['articul']);
-        unset($fullRequest['moreinfo']);
         unset($fullRequest['price-name']);
         unset($fullRequest['price-name']);
 

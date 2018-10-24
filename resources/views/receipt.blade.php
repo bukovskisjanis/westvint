@@ -120,25 +120,25 @@
             <div class="address text-left">
                 <span>Nosūtītājs:</span>{{ json_decode($vendor->name , true)['vendor_company'] }}<br>
                 <span>Juridiskā adrese:</span>{{ $vendor->address }}<br>
-                <span>Reģ.Nr.:</span ><br>
-                <span>PVN reģ.nr.:</span><br>
-                <span>Banka:</span><br>
-                <span>Kods:</span><br>
-                <span>Konts (EUR):</span><br>
-                <span>Izsniegšanas adrese:</span><br>
+                <span>Reģ.Nr.:</span >{{ json_decode($vendor->name , true)['vendor_reg_nr'] }}<br>
+                <span>PVN reģ.nr.:</span>{{ json_decode($vendor->name , true)['vendor_pvnregnr'] }}<br>
+                <span>Banka:</span>{{ json_decode($vendor->name , true)['vendor_westvint_bank'] }}<br>
+                <span>Kods:</span>{{ json_decode($vendor->name , true)['vendor_bank_code'] }}<br>
+                <span>Konts (EUR):</span>{{ json_decode($vendor->name , true)['vendor_bank_accnr'] }}<br>
+                <span>Izsniegšanas adrese:</span>{{ $owner->address }}<br>
             </div>
       </div>
       <!-- /.col -->
       <div class="col-sm-6 col-md-6 col-lg-6">
         <div class="address text-right">
             <span>Saņēmējs</span>{{ json_decode($owner->name , true)['client_company'] }}<br>
-            <span>Juridiskā adrese:</span>{{ $owner->address }}<br>
-            <span>Reģ.Nr.:</span><br>
-            <span>PVN reģ.nr.:</span><br>
-            <span>Banka:</span><br>
-            <span>Kods:</span><br>
-            <span>Konts (EUR):</span><br>
-            <span>Saņemšanas adrese:</span><br>
+            <span>Juridiskā adrese:</span>{{ json_decode($owner->name , true)['client_devadress'] }}<br>
+            <span>Reģ.Nr.:</span>{{ json_decode($owner->name , true)['client_regnr'] }}<br>
+            <span>PVN reģ.nr.:</span>{{ json_decode($owner->name , true)['client_pvnregnr'] }}<br>
+            <span>Banka:</span>{{ json_decode($owner->name , true)['client_bankname'] }}<br>
+            <span>Kods:</span>{{ json_decode($owner->name , true)['client_bankcode'] }}<br>
+            <span>Konts (EUR):</span>{{ json_decode($owner->name , true)['client_bankaccnr'] }}<br>
+            <span>Saņemšanas adrese:</span>{{ json_decode($owner->name , true)['client_devadress'] }}<br>
         </div>
       </div>
       <!-- /.col -->
@@ -218,7 +218,7 @@
     <div class="row invoice-info invoice-padding">
       <div class="col-sm-12 col-md-12">
             <div class="address text-left">
-                <p><span>Piezīmes</span><br></p>
+                <p><span>Piezīmes</span> {{json_decode($transaction->delivery , true)['notes']}} <br></p>
                 <span>Bruto masa</span>
                 <span>Neto masa</span>
             </div>
@@ -251,39 +251,5 @@
 <!-- ./wrapper -->
 </body>
 </html>
-
-{{ $vendor->name }}
-{{ $vendor->address }}
-{{ $vendor->city }}
-{{ $vendor->country}}
-{{ $vendor->phone}}
-{{ $vendor->email}}
-
-{{ $owner->name }}
-{{ $owner->address }}
-{{ $owner->city }}
-{{ $owner->country}}
-{{ $owner->phone}}
-{{ $owner->email}}
-
-
-
-@foreach( $products->items() as $product)
-	    {{ $product->name }}
-        {{ $product->quantity }}
-        {{ $product->price }}
-        {{ $product->total }}
-@endforeach
-
-
-
-{{ $transaction->id}}
-
-{{ $transaction->discount}}
-{{ $transaction->delivery}}
-
-
-{{ $transaction->createdAt}}
-{{ $transaction->meta}}
 
 

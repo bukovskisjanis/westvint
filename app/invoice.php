@@ -30,7 +30,8 @@ class invoice extends Model
         'product_list',
         'vendor_company',
         'vendor_representative',
-        'vendor_jobtitle'
+        'vendor_jobtitle',
+        'moreinfo'
     	];
 
 }
