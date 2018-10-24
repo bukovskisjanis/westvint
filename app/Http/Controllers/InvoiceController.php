@@ -137,8 +137,8 @@ class InvoiceController extends Controller
                         'method' => $invoiceDetail->{'delivery-method'},
                         'sum_name' => $invoiceDetail->{'price-name'},
                         'notes' => $invoiceDetail->moreinfo,
-                        'total_brutto' => 0,
-                        'total_netto' => 0
+                        'total_brutto' => $invoiceDetail->total_brutto,
+                        'total_netto' => $invoiceDetail->total_netto
                     ) , true),
                     'discount' => 0,
                     'tax' => $tax,

@@ -25,6 +25,10 @@
 
     function killAll(){
       console.log($(this).parent().parent());
+
+      $('#neto').val(Number($('#neto').val()) - Number($(this).parent().parent().find('select').attr('neto')));
+      $('#brutto').val(Number($('#brutto').val()) - Number($(this).parent().parent().find('select').attr('brutto')));
+
       $(this).parent().parent().remove();
       if ($(".invoice-line").length <= 5){
         productAdd();
@@ -39,9 +43,31 @@
           console.log( $(this).parent().parent());
           $(this).parent().parent().find('.product').val(productData.name);
           $(this).parent().parent().find('.oqty-price').val(productData.product_price);
+          $(this).parent().parent().find('.product_quantity').val(1);
+          $(this).parent().parent().find('.allqty-price').val(productData.product_price);
+
+          $('#neto').val(Number($('#neto').val()) - Number($(this).attr('neto')));
+          $('#brutto').val(Number($('#brutto').val()) - Number($(this).attr('brutto')));
+
+          $('#neto').val(Number($('#neto').val()) + (Number(productData.product_neto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())) );
+          $('#brutto').val(Number($('#brutto').val()) + (Number(productData.product_bruto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())) );
+
+          $(this).attr('brutto' , (Number(productData.product_bruto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
+          $(this).attr('neto' , (Number(productData.product_neto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
+
+
+          $(this).attr('base_brutto' , Number(productData.product_bruto_mass_all));
+          $(this).attr('base_neto' , Number(productData.product_neto_mass_all));
+
         }else{
           $(this).parent().parent().find('.product').val('');
           $(this).parent().parent().find('.oqty-price').val('');
+
+          $('#neto').val(Number($('#neto').val()) - Number($(this).attr('neto')));
+          $('#brutto').val(Number($('#brutto').val()) - Number($(this).attr('brutto')));
+
+          $(this).attr('brutto' , 0);
+          $(this).attr('neto' , 0);
         }
 
     }
@@ -54,8 +80,24 @@
           pricePerOne = $(this).parent().parent().find('.oqty-price').val();
           pricePerAll = (pricePerOne * $(this).val());
           $(this).parent().parent().find('.allqty-price').val(pricePerAll);
+
+          $('#neto').val(Number($('#neto').val()) - Number($(this).parent().parent().find('select').attr('neto')));
+          $('#brutto').val(Number($('#brutto').val()) - Number($(this).parent().parent().find('select').attr('brutto')));
+
+          $('#neto').val(Number($('#neto').val()) + (Number($(this).parent().parent().find('select').attr('base_neto')) * Number($(this).parent().parent().find('.product_quantity').val())) );
+          $('#brutto').val(Number($('#brutto').val()) + (Number($(this).parent().parent().find('select').attr('base_brutto')) * Number($(this).parent().parent().find('.product_quantity').val())) );
+
+          $(this).parent().parent().find('select').attr('brutto' , (Number(productData.product_bruto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
+          $(this).parent().parent().find('select').attr('neto' , (Number(productData.product_neto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
+
         }else{
           $(this).parent().parent().find('.allqty-price').val(0);
+
+          $('#neto').val(Number($('#neto').val()) - Number($(this).parent().parent().find('select').attr('neto')));
+          $('#brutto').val(Number($('#brutto').val()) - Number($(this).parent().parent().find('select').attr('brutto')));
+
+          $(this).parent().parent().find('select').attr('brutto',0);
+          $(this).parent().parent().find('select').attr('neto',0);
         }
     }
 
@@ -197,7 +239,7 @@
             <div class="col-md-12 invoice-line hidden hidden_product_line">
                 <div class="form-group col-md-2">
                   <label for="articul">Artikuls</label>
-                  <select class="form-control select2 articul_product_selector" style="width: 100%;"name="articul" class="articul">
+                  <select  neto=0 brutto=0 class="form-control select2 articul_product_selector" style="width: 100%;"name="articul" class="articul">
                     <option selected="selected">-----</option>
                     @foreach($products as $product)
                       <option value="{{$product->id}}" details="{{json_encode($product)}}" >{{ $product->articul}}</option>
@@ -229,7 +271,7 @@
             <div class="col-md-12 invoice-line ">
                 <div class="form-group col-md-2">
                   <label for="articul">Artikuls</label>
-                  <select class="form-control select2 articul_product_selector" style="width: 100%;"name="articul">
+                  <select neto=0 brutto=0 class="form-control select2 articul_product_selector" style="width: 100%;"name="articul">
                     <option selected="selected">-----</option>
                     @foreach($products as $product)
                       <option value="{{$product->id}}" details="{{json_encode($product)}}" >{{ $product->articul}}</option>
@@ -267,11 +309,11 @@
                   </div>
                       <div class="form-group col-md-3">
                         <label for="">Neto masa</label>
-                        <input type="text" class="form-control" name="" id="">
+                        <input type="text" class="form-control" name="total_netto" id="neto" value="0">
                       </div>
                       <div class="form-group col-md-2">
                         <label for="">Bruto masa</label>
-                        <input type="text" class="form-control" name="" id="">
+                        <input type="text" class="form-control" name="total_brutto"  id="brutto" value="0">
                       </div>
             </div>
             <div class="col-md-12">

@@ -31,7 +31,9 @@ class invoice extends Model
         'vendor_company',
         'vendor_representative',
         'vendor_jobtitle',
-        'moreinfo'
+        'moreinfo',
+        'total_netto' ,
+        'total_brutto'
     	];
 
 }
