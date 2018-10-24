@@ -15,11 +15,8 @@
       if ($(".invoice-line").length >= 5){
         $('.killall').click();
       }
-
       $('#invoice_id').remove();
-
       $(':input').val('');
-
     });
 
 
@@ -72,19 +69,33 @@
 
       productList =JSON.parse(invoiceDetails.product_list);
 
-      for (var i = productList.length - 1; i >= 0; i--) {
+      //for (var i = productList.length - 1; i >= 0; i--) {
+      for (i = 0; i < productList.length; i++) { 
 
         myProductRow = $(".hidden_product_line").clone().removeClass('hidden').removeClass('hidden_product_line');
-        myProductRow.find('.product').val(productList.reverse()[i]['name']);
-        myProductRow.find('.allqty-price').val(productList.reverse()[i]['allqty-price']);
-        myProductRow.find('.product_quantity').val(productList.reverse()[i]['quantity']);
+        myProductRow.find('.product').val(productList[i]['name']);
+        myProductRow.find('.allqty-price').val(productList[i]['allqty-price']);
+        myProductRow.find('.product_quantity').val(productList[i]['quantity']);
+        myProductRow.find('.oqty-price').val(parseFloat(productList[i]['allqty-price'])/parseFloat(productList[i]['quantity']));
         myProductRow.find('.articul_product_selector').hide();
 
-        $(".invoice_lead_row").append(myProductRow);
+        if (productList[i]['name'] && productList[i]['name'].trim() != ''){
+          $(".invoice_lead_row").append(myProductRow);
+        }
       };
 
       $(".invoice_lead_row").append('<input type="hidden" value="'+invoiceDetails.id+'" name="invoice_id" id="invoice_id" />')
-      console.log(productList);
+
+      $('.killall').unbind('click');
+      $('.killall').click(killAll);
+
+      $('.articul_product_selector').unbind('change');
+      $('.articul_product_selector').change(productChangeInfo);
+
+      $('.product_quantity').unbind('change');
+      $('.product_quantity').change(productCountChange);
+
+
     });
 
 
