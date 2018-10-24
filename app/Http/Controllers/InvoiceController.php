@@ -67,7 +67,7 @@ class InvoiceController extends Controller
                     'name' => json_encode(
                         array(
                             'vendor_company' => $invoiceDetail->vendor_company,
-                            'vendor_representative' => $invoiceDetail->vendor_representative ,
+                            'vendor_representative' => $jobTitleSettingsItem->westvint_person ,
                             'vendor_jobtitle'  => $jobTitleSettingsItem->westvint_persstatuss ,
                             'vendor_reg_nr' => $jobTitleSettingsItem->westvint_regnr,
                             'westvint_juradress' => $jobTitleSettingsItem->westvint_juradress,
@@ -136,7 +136,9 @@ class InvoiceController extends Controller
                         'type' => $invoiceDetail->{'delivery-type'} ,
                         'method' => $invoiceDetail->{'delivery-method'},
                         'sum_name' => $invoiceDetail->{'price-name'},
-                        'notes' => $invoiceDetail->moreinfo
+                        'notes' => $invoiceDetail->moreinfo,
+                        'total_brutto' => 0,
+                        'total_netto' => 0
                     ) , true),
                     'discount' => 0,
                     'tax' => $tax,

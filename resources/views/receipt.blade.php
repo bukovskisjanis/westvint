@@ -219,8 +219,8 @@
       <div class="col-sm-12 col-md-12">
             <div class="address text-left">
                 <p><span>Piezīmes</span> {{json_decode($transaction->delivery , true)['notes']}} <br></p>
-                <span>Bruto masa</span>
-                <span>Neto masa</span>
+                <p><span>Bruto masa</span> {{json_decode($transaction->delivery , true)['total_brutto']}}<br></p>
+                <p><span>Neto masa</span> {{json_decode($transaction->delivery , true)['total_netto']}}<br></p>
             </div>
       </div>
     </div>
@@ -229,7 +229,7 @@
             <div class="address text-left">
                 <span>Summa kopā vārdiem EUR:</span>{{ json_decode($transaction->delivery , true)['sum_name'] }}<br>
                 <span>Izsniedza:</span>   {{ json_decode($vendor->name , true)['vendor_company'] }}<br>
-                <span>{{ json_decode($vendor->name , true)['vendor_jobtitle'] }} :</span>   ....................................<br>
+                <span>Amats :</span>   {{ json_decode($vendor->name , true)['vendor_jobtitle'] }}<br>
                 <span>Vārds Uzvārds:</span>  {{ json_decode($vendor->name , true)['vendor_representative'] }} <br>
                 <span>{{ $transaction->createdAt }}</span><br>
             </div>
