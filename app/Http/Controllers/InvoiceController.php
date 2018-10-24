@@ -67,7 +67,7 @@ class InvoiceController extends Controller
                     'name' => json_encode(
                         array(
                             'vendor_company' => $invoiceDetail->vendor_company,
-                            'vendor_representative' => $invoiceDetail->vendor_representative ,
+                            'vendor_representative' => $jobTitleSettingsItem->westvint_person ,
                             'vendor_jobtitle'  => $jobTitleSettingsItem->westvint_persstatuss ,
                             'vendor_reg_nr' => $jobTitleSettingsItem->westvint_regnr,
                             'westvint_juradress' => $jobTitleSettingsItem->westvint_juradress,
@@ -86,7 +86,7 @@ class InvoiceController extends Controller
                     'name' => json_encode(
                         array(
                             'client_company' => $invoiceDetail->client_name,
-                            'client_representative' => $invoiceDetail->namelastname,
+                            'client_representative' => $invoiceDetail->namesurname,
                             'client_jobtitle' => $invoiceDetail->jobtitle,
                             'client_regnr' => $invoiceDetail->regnr,
                             'client_pvnregnr' => $invoiceDetail->pvnregnr,
@@ -113,7 +113,7 @@ class InvoiceController extends Controller
                         $absoluteInvoiceTotal = $absoluteInvoiceTotal + $productIntro['allqty-price'];
 
                         $productCollectionPack[] = array(
-                            'sku' => md5($productIntro['name']),
+                            'sku' => (isset($productIntro['code']) ? $productIntro['code'] : md5($productIntro['name'])),
                             'name' => $productIntro['name'],
                             'quantity' => $productIntro['quantity'],
                             'price' => $productIntro['oqty-price'],
@@ -136,7 +136,11 @@ class InvoiceController extends Controller
                         'type' => $invoiceDetail->{'delivery-type'} ,
                         'method' => $invoiceDetail->{'delivery-method'},
                         'sum_name' => $invoiceDetail->{'price-name'},
-                        'notes' => $invoiceDetail->moreinfo
+                        'notes' => $invoiceDetail->moreinfo,
+                        'total_brutto' => $invoiceDetail->total_brutto,
+                        'total_netto' => $invoiceDetail->total_netto,
+                        'payment_date' => $invoiceDetail->{'payment-date'},
+                        'delivery_date' => $invoiceDetail->{'dev-entry-date'}
                     ) , true),
                     'discount' => 0,
                     'tax' => $tax,
@@ -207,6 +211,7 @@ class InvoiceController extends Controller
 
         foreach ($fullRequest['product'] as $productInstanceKey => $productInstance) {
             $productListArray[] = array(
+                'code' => $fullRequest['hidden_articul'][$productInstanceKey],
                 'name' => $productInstance,
                 'quantity' => $fullRequest['qty'][$productInstanceKey] ,
                 'oqty-price' => $fullRequest['oqty-price'][$productInstanceKey],

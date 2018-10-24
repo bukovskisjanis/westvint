@@ -148,9 +148,9 @@
             <div class="address text-left">
                   <span>Parvadātājs:</span> {{ json_decode($transaction->delivery , true)['type'] }}<br>
                   <span>Samaksas noteikumi:</span> Pārskaitījums<br>
-                  <span>Samaksas datums:</span> {{ $transaction->createdAt }}<br>
+                  <span>Samaksas datums:</span> {{ json_decode($transaction->delivery , true)['payment_date'] }}<br>
                   <span>Darījuma raksturs</span> {{ json_decode($transaction->delivery , true)['method'] }}<br>
-                  <span>Piegādes/saņemšanas datums:</span> {{ $transaction->createdAt }}<br>
+                  <span>Piegādes/saņemšanas datums:</span> {{ json_decode($transaction->delivery , true)['payment_date'] }}<br>
             </div>
       </div>
     </div>
@@ -183,9 +183,9 @@
                     <tr>
                       <td class="text-center">{{ $key }}</td>
                       <td>
-                        {{ $product->name }}
+                        {{ $product->sku }}
                       </td>
-                      <td></td>
+                      <td> {{ $product->name }} </td>
                       <td class="text-center">
                         {{ $product->quantity }}
                       </td>
@@ -219,8 +219,8 @@
       <div class="col-sm-12 col-md-12">
             <div class="address text-left">
                 <p><span>Piezīmes</span> {{json_decode($transaction->delivery , true)['notes']}} <br></p>
-                <span>Bruto masa</span>
-                <span>Neto masa</span>
+                <p><span>Bruto masa</span> {{json_decode($transaction->delivery , true)['total_brutto']}}<br></p>
+                <p><span>Neto masa</span> {{json_decode($transaction->delivery , true)['total_netto']}}<br></p>
             </div>
       </div>
     </div>
@@ -229,7 +229,7 @@
             <div class="address text-left">
                 <span>Summa kopā vārdiem EUR:</span>{{ json_decode($transaction->delivery , true)['sum_name'] }}<br>
                 <span>Izsniedza:</span>   {{ json_decode($vendor->name , true)['vendor_company'] }}<br>
-                <span>{{ json_decode($vendor->name , true)['vendor_jobtitle'] }} :</span>   ....................................<br>
+                <span>Amats :</span>   {{ json_decode($vendor->name , true)['vendor_jobtitle'] }}<br>
                 <span>Vārds Uzvārds:</span>  {{ json_decode($vendor->name , true)['vendor_representative'] }} <br>
                 <span>{{ $transaction->createdAt }}</span><br>
             </div>
@@ -240,7 +240,6 @@
             <span>Vārds Uzvārds:</span> {{ json_decode($owner->name , true)['client_representative'] }} <br>
             <span>Amats:</span> {{ json_decode($owner->name , true)['client_jobtitle'] }} <br>
             <span>Paraksts:</span>   ....................................<br>
-            <span>{{ $transaction->createdAt }}</span><br>
         </div>
       </div>
       <!-- /.col -->
