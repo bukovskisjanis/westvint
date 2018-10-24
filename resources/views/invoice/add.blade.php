@@ -41,10 +41,12 @@
         if ($(this).val() > 0){
           productData = JSON.parse($('option:selected', this).attr('details'));
           console.log( $(this).parent().parent());
-          $(this).parent().parent().find('.product').val(productData.name);
+          $(this).parent().parent().find('.product').val(productData.name + ' ' + productData.din_iso + ' ' +  productData.diameter_dm + '/' +productData.diameter_dm + ' ' +  productData.material);
           $(this).parent().parent().find('.oqty-price').val(productData.product_price);
           $(this).parent().parent().find('.product_quantity').val(1);
           $(this).parent().parent().find('.allqty-price').val(productData.product_price);
+
+          $(this).parent().parent().find('.hidden_articul').val(productData.articul);
 
           $('#neto').val(Number($('#neto').val()) - Number($(this).attr('neto')));
           $('#brutto').val(Number($('#brutto').val()) - Number($(this).attr('brutto')));
@@ -239,12 +241,13 @@
             <div class="col-md-12 invoice-line hidden hidden_product_line">
                 <div class="form-group col-md-2">
                   <label for="articul">Artikuls</label>
-                  <select  neto=0 brutto=0 class="form-control select2 articul_product_selector" style="width: 100%;"name="articul" class="articul">
+                  <select  neto=0 brutto=0 class="form-control select2 articul_product_selector" style="width: 100%;"name="articul[]" class="articul">
                     <option selected="selected">-----</option>
                     @foreach($products as $product)
                       <option value="{{$product->id}}" details="{{json_encode($product)}}" >{{ $product->articul}}</option>
                     @endforeach
                   </select>
+                  <input type="hidden" class="hidden_articul" name="hidden_articul[]">
                 </div>
                 <div class="form-group col-md-4">
                   <label for="product">Produkts</label>
@@ -271,13 +274,13 @@
             <div class="col-md-12 invoice-line ">
                 <div class="form-group col-md-2">
                   <label for="articul">Artikuls</label>
-                  <select neto=0 brutto=0 class="form-control select2 articul_product_selector" style="width: 100%;"name="articul">
+                  <select neto=0 brutto=0 class="form-control select2 articul_product_selector" style="width: 100%;"name="articul[]">
                     <option selected="selected">-----</option>
                     @foreach($products as $product)
                       <option value="{{$product->id}}" details="{{json_encode($product)}}" >{{ $product->articul}}</option>
                     @endforeach
                   </select>
-
+                  <input type="hidden" class="hidden_articul" name="hidden_articul[]">
                 </div>
                 <div class="form-group col-md-4">
                   <label for="product">Produkts</label>

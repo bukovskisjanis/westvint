@@ -183,9 +183,9 @@
                     <tr>
                       <td class="text-center">{{ $key }}</td>
                       <td>
-                        {{ $product->name }}
+                        {{ $product->sku }}
                       </td>
-                      <td></td>
+                      <td> {{ $product->name }} </td>
                       <td class="text-center">
                         {{ $product->quantity }}
                       </td>
@@ -240,7 +240,6 @@
             <span>Vārds Uzvārds:</span> {{ json_decode($owner->name , true)['client_representative'] }} <br>
             <span>Amats:</span> {{ json_decode($owner->name , true)['client_jobtitle'] }} <br>
             <span>Paraksts:</span>   ....................................<br>
-            <span>{{ $transaction->createdAt }}</span><br>
         </div>
       </div>
       <!-- /.col -->

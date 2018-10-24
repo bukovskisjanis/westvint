@@ -86,7 +86,7 @@ class InvoiceController extends Controller
                     'name' => json_encode(
                         array(
                             'client_company' => $invoiceDetail->client_name,
-                            'client_representative' => $invoiceDetail->namelastname,
+                            'client_representative' => $invoiceDetail->namesurname,
                             'client_jobtitle' => $invoiceDetail->jobtitle,
                             'client_regnr' => $invoiceDetail->regnr,
                             'client_pvnregnr' => $invoiceDetail->pvnregnr,
@@ -113,7 +113,7 @@ class InvoiceController extends Controller
                         $absoluteInvoiceTotal = $absoluteInvoiceTotal + $productIntro['allqty-price'];
 
                         $productCollectionPack[] = array(
-                            'sku' => md5($productIntro['name']),
+                            'sku' => (isset($productIntro['code']) ? $productIntro['code'] : md5($productIntro['name'])),
                             'name' => $productIntro['name'],
                             'quantity' => $productIntro['quantity'],
                             'price' => $productIntro['oqty-price'],
@@ -209,6 +209,7 @@ class InvoiceController extends Controller
 
         foreach ($fullRequest['product'] as $productInstanceKey => $productInstance) {
             $productListArray[] = array(
+                'code' => $fullRequest['hidden_articul'][$productInstanceKey],
                 'name' => $productInstance,
                 'quantity' => $fullRequest['qty'][$productInstanceKey] ,
                 'oqty-price' => $fullRequest['oqty-price'][$productInstanceKey],
