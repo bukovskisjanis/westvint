@@ -6,18 +6,105 @@
 <script type="text/javascript">
   $(function() {
     //invoice edit procedure
-    
+
+    $('#add_invoice').click(function(){
+      $('#client_select').show();
+      $('#client_name_span').hide(); 
+      $('.invoiceProcessorLabelH1').html('Add new Invoice'); 
+
+      if ($(".invoice-line").length >= 5){
+        $('.killall').click();
+      }
+
+      $('#invoice_id').remove();
+
+      $(':input').val('');
+
+    });
+
+
+    $('.product_edit_buttonbtn').click(function(){
+
+      $('.invoiceProcessorLabelH1').html('Edit Invoice'); 
+      invoiceDetails =JSON.parse($(this).attr('invoice_full_details'));
+
+      //put basic values in fields ...
+      $('#client_select').hide();
+      $('#client_name_span').html(invoiceDetails.client_name);
+
+      $('#client_name_span').show();
+      $('#client_name_span').removeClass('hidden');
+
+      $('#factadress').val(invoiceDetails.factadress);
+      $('#regnr').val(invoiceDetails.regnr);
+      $('#pvnregnr').val(invoiceDetails.pvnregnr);
+      $('#bankname').val(invoiceDetails.bankname);
+      $('#bankcode').val(invoiceDetails.bankcode);
+      $('#bankaccnr').val(invoiceDetails.bankaccnr);
+      $('#devadress').val(invoiceDetails.devadress);
+      $('#delivery-type').val(invoiceDetails['delivery-type']);
+      $('#paymentmethod').val(invoiceDetails.paymentmethod);
+      $('#delivery-model').val(invoiceDetails['delivery-model']);
+      $('#payment-date').val(invoiceDetails['payment-date']);
+      $('#dev-entry-date').val(invoiceDetails['dev-entry-date']);
+      $('#moreinfo').val(invoiceDetails.moreinfo);
+      $('#total_netto').val(invoiceDetails.total_netto);
+      $('#total_brutto').val(invoiceDetails.total_brutto);
+      $('#price-name').val(invoiceDetails['price-name']);
+      $('#product').val(invoiceDetails.product);
+      $('#vendor_company').val(invoiceDetails.vendor_company);
+      $('#vendor_representative').val(invoiceDetails.vendor_representative);
+      $('#vendor_jobtitle').val(invoiceDetails.vendor_jobtitle);
+      $('#vendor_jobtitle_hidden').val(invoiceDetails.vendor_jobtitle_hidden);
+      $('#invoice-date-writen').val(invoiceDetails['invoice-date-writen']);
+      $('#client_name').val(invoiceDetails.client_name);
+      $('#namesurname').val(invoiceDetails.namesurname);
+      $('#jobtitle').val(invoiceDetails.jobtitle);
+      $('#client-signature').val(invoiceDetails['client-signature']);
+      $('#invoice-date-writen').val(invoiceDetails['invoice-date-writen']);
+      $('#add-invoice').modal('show');
+
+      if ($(".invoice-line").length >= 5){
+        $('.killall').click();
+      }
+
+      $('.firstblod').parent().parent().remove();
+
+      productList =JSON.parse(invoiceDetails.product_list);
+
+      for (var i = productList.length - 1; i >= 0; i--) {
+
+        myProductRow = $(".hidden_product_line").clone().removeClass('hidden').removeClass('hidden_product_line');
+        myProductRow.find('.product').val(productList.reverse()[i]['name']);
+        myProductRow.find('.allqty-price').val(productList.reverse()[i]['allqty-price']);
+        myProductRow.find('.product_quantity').val(productList.reverse()[i]['quantity']);
+        myProductRow.find('.articul_product_selector').hide();
+
+        $(".invoice_lead_row").append(myProductRow);
+      };
+
+      $(".invoice_lead_row").append('<input type="hidden" value="'+invoiceDetails.id+'" name="invoice_id" id="invoice_id" />')
+      console.log(productList);
+    });
 
 
     //invoice product procedures
     $('.product_add_button').click(productAdd);
 
 
-    function productAdd(){
+    function productAdd(addonclass){
       console.log('addin new');
+
+      newProdItem = $(".hidden_product_line").clone().removeClass('hidden').removeClass('hidden_product_line');
+
+      if (typeof addonclass != 'undefined'){
+        newProdItem.find('.killall').addClass(addonclass);
+      }
+
       $(".invoice_lead_row").append(
-            $(".hidden_product_line").clone().removeClass('hidden').removeClass('hidden_product_line')
+          newProdItem
       );
+
       $('.killall').unbind('click');
       $('.killall').click(killAll);
 
@@ -29,14 +116,17 @@
     }
 
     function killAll(){
-      console.log($(this).parent().parent());
 
-      $('#neto').val(Number($('#neto').val()) - Number($(this).parent().parent().find('select').attr('neto')));
-      $('#brutto').val(Number($('#brutto').val()) - Number($(this).parent().parent().find('select').attr('brutto')));
+      if (!$(this).parent().parent().hasClass('hidden_product_line')){
+        console.log($(this).parent().parent());
 
-      $(this).parent().parent().remove();
-      if ($(".invoice-line").length <= 5){
-        productAdd();
+        $('#neto').val(Number($('#neto').val()) - Number($(this).parent().parent().find('select').attr('neto')));
+        $('#brutto').val(Number($('#brutto').val()) - Number($(this).parent().parent().find('select').attr('brutto')));
+
+        $(this).parent().parent().remove();
+        if ($(".invoice-line").length <= 5){
+          productAdd('firstblod');
+        }
       }
     }
 
@@ -161,6 +251,7 @@
           <div class="col-md-2 col-lg-3">
             <div class="form-group">
               <label>Saņēmējs</label>
+              <span id="client_name_span" class="hidden"></span>
               <select id="client_select" class="form-control select2" style="width: 100%;">
                 <option value=0 >----</option>
                 @foreach($clients as $client)
@@ -305,7 +396,7 @@
                 </div>
                 <div class="col-md-1 col-lg-1 form-group">
                   <label>Settings</label>
-                  <button type="button" class="killall form-control btn  btn-danger btn-flat"><i class="fa fa-times-circle"></i></button>
+                  <button type="button" class="firstblod killall form-control btn  btn-danger btn-flat"><i class="fa fa-times-circle"></i></button>
                 </div>
             </div>
         </div>
@@ -334,7 +425,7 @@
                   <input type="text" class="form-control" name="product" id="product" disabled="" placeholder="WestVint">
                 </div>
 
-                <input type="hidden" name="vendor_company" value="WestVint">
+                <input type="hidden" name="vendor_company" value="WestVint" id="vendor_company">
 
                 <div class="form-group col-md-2">
                   <label for="vendor_representative">Vārds Uzvārds</label>

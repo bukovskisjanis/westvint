@@ -4,7 +4,7 @@
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Invoice list</h3>
-    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#add-invoice">Add new Invoice</button>
+    <button type="button" id="add_invoice" class="btn btn-primary pull-right" data-toggle="modal" data-target="#add-invoice">Add new Invoice</button>
   </div>
     <div class="box-header">
       <h3 class="box-title">Search</h3>
@@ -101,7 +101,7 @@
                           data-empsurname="{{$invoice_item->jobtitle}}" 
                           data-empadress="{{$invoice_item->adress}}"  
                           class="product_edit_buttonbtn btn-edit btn-flat popbutton"
-                          product_id={{$invoice_item->id}}
+                          invoice_full_details='{{json_encode($invoice_item)}}'
                           data-toggle="modal" 
                           data-target="#editdarbinieks">
                           <i class="fa fa-edit "></i>
@@ -175,7 +175,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-        <h2 class="modal-title" id="exampleModalLabel">Add new Invoice</h2>
+        <h2 class="modal-title invoiceProcessorLabelH1" id="exampleModalLabel">Add new Invoice</h2>
       </div>
       <form action="{{route('invoice.store')}}" method="post">
         {{csrf_field()}}
