@@ -138,7 +138,9 @@ class InvoiceController extends Controller
                         'sum_name' => $invoiceDetail->{'price-name'},
                         'notes' => $invoiceDetail->moreinfo,
                         'total_brutto' => $invoiceDetail->total_brutto,
-                        'total_netto' => $invoiceDetail->total_netto
+                        'total_netto' => $invoiceDetail->total_netto,
+                        'payment_date' => $invoiceDetail->{'payment-date'},
+                        'delivery_date' => $invoiceDetail->{'dev-entry-date'}
                     ) , true),
                     'discount' => 0,
                     'tax' => $tax,

@@ -148,9 +148,9 @@
             <div class="address text-left">
                   <span>Parvadātājs:</span> {{ json_decode($transaction->delivery , true)['type'] }}<br>
                   <span>Samaksas noteikumi:</span> Pārskaitījums<br>
-                  <span>Samaksas datums:</span> {{ $transaction->createdAt }}<br>
+                  <span>Samaksas datums:</span> {{ json_decode($transaction->delivery , true)['payment_date'] }}<br>
                   <span>Darījuma raksturs</span> {{ json_decode($transaction->delivery , true)['method'] }}<br>
-                  <span>Piegādes/saņemšanas datums:</span> {{ $transaction->createdAt }}<br>
+                  <span>Piegādes/saņemšanas datums:</span> {{ json_decode($transaction->delivery , true)['payment_date'] }}<br>
             </div>
       </div>
     </div>
