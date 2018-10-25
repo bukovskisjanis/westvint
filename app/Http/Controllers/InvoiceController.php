@@ -170,14 +170,22 @@ class InvoiceController extends Controller
             }
         }
     }
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $invoice = invoice::all();
+
+        if ($request->has('status')){
+            $invoice = invoice::where('status' , '=' , $request->get('status'))->get();
+        }else{
+            $invoice = invoice::all();
+        }
+
         $settings = Settings::all();
         $clients = Client::all();
         $products = Products::all();

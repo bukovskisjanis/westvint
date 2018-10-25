@@ -32,10 +32,12 @@
               <div class="col-md-2 col-lg-2">
                 <div class="form-group">
                   <label>Payment statuss</label>
-                  <select class="form-control select2" style="width: 100%;">
-                    <option selected="selected">Recived payment</option>
-                    <option>Didnt recived payment </option>
-                    <option>Cancel Invoice</option>
+                  <select id="invoice_status_change" class="form-control select2" style="width: 100%;">
+                    <option value=''>----</option>
+                    <option value=''>All</option>
+                    <option value="recived_payment">Recived payment</option>
+                    <option value="didnt_recived_payment" >Didnt recived payment </option>
+                    <option value="cancel_invoice" >Cancel Invoice</option>
                   </select>
                 </div>
               </div>

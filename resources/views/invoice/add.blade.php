@@ -7,6 +7,17 @@
   $(function() {
     //invoice edit procedure
 
+
+    $('#invoice_status_change').change(
+      function(){
+        if ($(this).val() != ''){
+          window.location.replace("/invoice?status=" + $(this).val());
+        }else{
+          window.location.replace("/invoice");
+        }
+      }
+    );
+
     $('#add_invoice').click(function(){
       $('#client_select').show();
       $('#client_name_span').hide(); 
@@ -215,7 +226,7 @@
             $(this).parent().parent().find('select').attr('brutto' , (Number(productData.product_bruto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
             $(this).parent().parent().find('select').attr('neto' , (Number(productData.product_neto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
           }
-          
+
         }else{
           $(this).parent().parent().find('.allqty-price').val(0);
 
