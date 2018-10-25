@@ -7,6 +7,7 @@ use App\invoice;
 use App\Settings;
 use App\Products;
 use App\Client;
+use App\histroy;
 use Auth;
 
 use Faker\Generator as Faker;
@@ -209,6 +210,11 @@ class InvoiceController extends Controller
             //different Ravioli on update
             $invoiceRequest = invoice::where('id' , intval($fullRequest['invoice_id']));
             if ($invoiceRequest->count() > 0){
+
+                $historyUpdate = new histroy();
+                $historyUpdate->user_id = Auth::user()->id;
+                $historyUpdate->invoice_statuss = 'changed';
+                $historyUpdate->save();
 
                 $processedInvoice = $invoiceRequest->first();
 
