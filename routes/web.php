@@ -30,6 +30,7 @@ Route::resource('product','ProductController');
 Route::resource('invoice','InvoiceController');
 
 Route::get('/gen/invoice/{id}', 'InvoiceController@generator')->name('generator');
+Route::get('/statuss_change/{status}/{id}', 'InvoiceController@statuss_change')->name('statuss_change');
 
 Route::resource('settings','SettingsController');
 

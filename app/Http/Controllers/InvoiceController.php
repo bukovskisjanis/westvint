@@ -214,6 +214,7 @@ class InvoiceController extends Controller
                 $historyUpdate = new histroy();
                 $historyUpdate->user_id = Auth::user()->id;
                 $historyUpdate->invoice_statuss = 'changed';
+                $historyUpdate->invoice_id = intval($fullRequest['invoice_id']);
                 $historyUpdate->save();
 
                 $processedInvoice = $invoiceRequest->first();
@@ -292,6 +293,24 @@ class InvoiceController extends Controller
         }
 
         return back();
+    }
+
+
+    public function statuss_change($status , $invoice_id){
+        $historyUpdate = new histroy();
+        $historyUpdate->user_id = Auth::user()->id;
+        $historyUpdate->invoice_statuss = $status;
+        $historyUpdate->invoice_id = $invoice_id;
+        $historyUpdate->save();
+
+        $invoiceSearch = invoice::where('id' , $invoice_id);
+        if ($invoiceSearch->count()){
+            $invoice = $invoiceSearch->first();
+            $invoice->status = $status;
+            $invoice->save();
+        }
+
+        return back();   
     }
 
     /**

@@ -96,6 +96,15 @@
                   <td><a href="/gen/invoice/{{$invoice_item->id}}"><i class="fa  fa-file-pdf-o"></i></a> </td>
                   <td>
                     <div class="btn-group"> 
+
+                              <button type="button" class="btn btn-view btn-flat"><i class="fa fa-eye"></i></button>
+                              <button type="button" class="btn btn-edit btn-flat"><i class="fa fa-edit "></i></button>
+                              <button type="button" class="btn btn-delete btn-flat"><i class="fa fa-times-circle"></i></button>
+
+                              <button onclick="window.location.href='/statuss_change/recived_payment/{{$invoice_item->id}}'" type="button" class="btn btn-success btn-flat"><i class="fa fa-check"></i>  Recived payment</button>
+                              <button onclick="window.location.href='/statuss_change/didnt_recived_payment/{{$invoice_item->id}}'" type="button" class="btn btn-default btn-flat"><i class="fa  fa-clock-o"></i>  Didnt recived payment </button>
+                              <button onclick="window.location.href='/statuss_change/cancel_invoice/{{$invoice_item->id}}'" type="button" class="btn btn-black btn-flat"><i class="fa fa-times-circle"></i>  Cancel Invoice</button>
+
                         <button type="button" 
                           data-empfirstname="{{$invoice_item->client_name}}" 
                           data-empsurname="{{$invoice_item->jobtitle}}" 
@@ -154,12 +163,7 @@
                         <td></td>
                         <td>
                           <div class="btn-group">
-                              <button type="button" class="btn btn-view btn-flat"><i class="fa fa-eye"></i></button>
-                              <button type="button" class="btn btn-edit btn-flat"><i class="fa fa-edit "></i></button>
-                              <button type="button" class="btn btn-delete btn-flat"><i class="fa fa-times-circle"></i></button>
-                              <button type="button" class="btn btn-success btn-flat"><i class="fa fa-check"></i>  Recived payment</button>
-                              <button type="button" class="btn btn-default btn-flat"><i class="fa  fa-clock-o"></i>  Didnt recived payment </button>
-                              <button type="button" class="btn btn-black btn-flat"><i class="fa fa-times-circle"></i>  Cancel Invoice</button>
+
                           </div>
                         </td>
                         <td>
