@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\historys;
+use App\histroy;
 
 class HistoryController extends Controller
 {
@@ -14,7 +14,7 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        // $historys = history::all();
+        $historys = histroy::all();
         return view('history.index',compact('historys'));
     }
 

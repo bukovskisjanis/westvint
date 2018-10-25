@@ -16,12 +16,14 @@
 	                </tr>
               	</thead>
                 <tbody>
+                	@foreach($historys as $history)
 	                <tr>
-	                  <td>22</td>
-	                  <td>user_name/surname</td>
-	                  <td>invoice_statuss</td>
-	                  <td>Timespace</td>
+	                  <td>{{ $history->id }}</td>
+	                  <td>{{ \App\Users::where('id' , $history->user_id)->first()->name }}</td>
+	                  <td>{{ $history->invoice_statuss }}</td>
+	                  <td>{{ $history->created_at }}</td>
 	                </tr>
+	                @endforeach
               </tbody>
             </table>
 		</div>
