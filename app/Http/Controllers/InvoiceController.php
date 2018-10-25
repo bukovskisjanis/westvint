@@ -205,38 +205,86 @@ class InvoiceController extends Controller
 
         $fullRequest = $request->all();
 
-        unset($fullRequest['_token']);
+        if (isset($fullRequest['invoice_id']) && intval($fullRequest['invoice_id']) > 0){
+            //different Ravioli on update
+            $invoiceRequest = invoice::where('id' , intval($fullRequest['invoice_id']));
+            if ($invoiceRequest->count() > 0){
 
-        $productListArray = array();
+                $processedInvoice = $invoiceRequest->first();
 
-        $invoiceTotal = 0;
+                $oldProductDetails = json_decode($processedInvoice->product_list);
 
-        foreach ($fullRequest['product'] as $productInstanceKey => $productInstance) {
-            $productListArray[] = array(
-                'code' => $fullRequest['hidden_articul'][$productInstanceKey],
-                'name' => $productInstance,
-                'quantity' => $fullRequest['qty'][$productInstanceKey] ,
-                'oqty-price' => $fullRequest['oqty-price'][$productInstanceKey],
-                'allqty-price' => $fullRequest['allqty-price'][$productInstanceKey]
-            );
+                $newproductDetails = array();
 
-            ///
-            $invoiceTotal = (float)$fullRequest['allqty-price'][$productInstanceKey] + (float)$invoiceTotal;
+                $invoiceTotal = 0;
+
+                foreach ($fullRequest['product'] as $productInstanceKey => $productInstance) {
+                    $newproductDetails[] = array(
+                        'code' => $fullRequest['hidden_articul'][$productInstanceKey],
+                        'name' => $productInstance,
+                        'quantity' => $fullRequest['qty'][$productInstanceKey] ,
+                        'oqty-price' => $fullRequest['oqty-price'][$productInstanceKey],
+                        'allqty-price' => $fullRequest['allqty-price'][$productInstanceKey],
+                        'hidden_brutto' => (isset($fullRequest['hidden_brutto'][$productInstanceKey]) ? $fullRequest['hidden_brutto'][$productInstanceKey] : 0),
+                        'hidden_netto' => (isset($fullRequest['hidden_netto'][$productInstanceKey]) ? $fullRequest['hidden_netto'][$productInstanceKey] : 0)               
+                    );
+
+                    $invoiceTotal = (float)$fullRequest['allqty-price'][$productInstanceKey] + (float)$invoiceTotal;
+                }
+
+
+                //product pain
+
+                // dd(array(
+                //     $oldProductDetails , $newproductDetails
+                // ));
+
+                $fullRequest['product_list'] = json_encode($newproductDetails);
+
+                unset($fullRequest['articul']);
+                unset($fullRequest['price-name']);
+                unset($fullRequest['price-name']);
+
+                //do update
+                $processedInvoice->update($fullRequest);
+            }
+        }else{
+            unset($fullRequest['_token']);
+
+            $productListArray = array();
+
+            $invoiceTotal = 0;
+
+            foreach ($fullRequest['product'] as $productInstanceKey => $productInstance) {
+                $productListArray[] = array(
+                    'code' => $fullRequest['hidden_articul'][$productInstanceKey],
+                    'name' => $productInstance,
+                    'quantity' => $fullRequest['qty'][$productInstanceKey] ,
+                    'oqty-price' => $fullRequest['oqty-price'][$productInstanceKey],
+                    'allqty-price' => $fullRequest['allqty-price'][$productInstanceKey],
+                    'hidden_brutto' => (isset($fullRequest['hidden_brutto'][$productInstanceKey]) ? $fullRequest['hidden_brutto'][$productInstanceKey] : 0),
+                    'hidden_netto' => (isset($fullRequest['hidden_netto'][$productInstanceKey]) ? $fullRequest['hidden_netto'][$productInstanceKey] : 0)               
+                );
+
+                ///
+                $invoiceTotal = (float)$fullRequest['allqty-price'][$productInstanceKey] + (float)$invoiceTotal;
+            }
+
+            $fullRequest['product_list'] = json_encode($productListArray);
+            $fullRequest['total_sum'] = $invoiceTotal;
+            $fullRequest['last_editor'] = Auth::user()->name;
+
+            $fullRequest['creator_name'] = Auth::user()->name;
+            $fullRequest['creator_id'] = Auth::user()->id;
+
+            //remove direct miracles
+            unset($fullRequest['articul']);
+            unset($fullRequest['price-name']);
+            unset($fullRequest['price-name']);
+
+            invoice::create($fullRequest);
         }
 
-        $fullRequest['product_list'] = json_encode($productListArray);
-        $fullRequest['total_sum'] = $invoiceTotal;
-        $fullRequest['last_editor'] = Auth::user()->name;
-
-        $fullRequest['creator_name'] = Auth::user()->name;
-        $fullRequest['creator_id'] = Auth::user()->id;
-
-        //remove direct miracles
-        unset($fullRequest['articul']);
-        unset($fullRequest['price-name']);
-        unset($fullRequest['price-name']);
-
-        invoice::create($fullRequest);
         return back();
     }
 

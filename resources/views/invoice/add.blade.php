@@ -17,6 +17,7 @@
       }
       $('#invoice_id').remove();
       $(':input').val('');
+      $('#laratoken').val('{{ csrf_token() }}');
     });
 
 
@@ -77,7 +78,16 @@
         myProductRow.find('.allqty-price').val(productList[i]['allqty-price']);
         myProductRow.find('.product_quantity').val(productList[i]['quantity']);
         myProductRow.find('.oqty-price').val(parseFloat(productList[i]['allqty-price'])/parseFloat(productList[i]['quantity']));
-        myProductRow.find('.articul_product_selector').hide();
+        myProductRow.find('.articul_product_selector').remove();
+        myProductRow.find('.hidden_articul').val(productList[i]['code']);
+        //neto brutto assigne
+        myProductRow.find('.hidden_netto').val(productList[i]['hidden_netto']);
+        myProductRow.find('.hidden_brutto').val(productList[i]['hidden_brutto']);   
+        myProductRow.find('.product').attr('base_brutto' , productList[i]['hidden_brutto']);
+        myProductRow.find('.product').attr('base_neto' , productList[i]['hidden_netto']);
+        myProductRow.find('.product').attr('brutto' , (Number(productList[i]['hidden_brutto']) * Number(productList[i]['quantity']) ));
+        myProductRow.find('.product').attr('neto' , (Number(productList[i]['hidden_netto']) * Number(productList[i]['quantity']) ));
+
 
         if (productList[i]['name'] && productList[i]['name'].trim() != ''){
           $(".invoice_lead_row").append(myProductRow);
@@ -167,6 +177,9 @@
           $(this).attr('base_brutto' , Number(productData.product_bruto_mass_all));
           $(this).attr('base_neto' , Number(productData.product_neto_mass_all));
 
+          $(this).parent().parent().find('.hidden_netto').val(productData.product_neto_mass_all);
+          $(this).parent().parent().find('.hidden_brutto').val(productData.product_bruto_mass_all);          
+
         }else{
           $(this).parent().parent().find('.product').val('');
           $(this).parent().parent().find('.oqty-price').val('');
@@ -176,6 +189,9 @@
 
           $(this).attr('brutto' , 0);
           $(this).attr('neto' , 0);
+
+          $(this).parent().parent().find('.hidden_netto').val(0);
+          $(this).parent().parent().find('.hidden_brutto').val(0);
         }
 
     }
@@ -189,15 +205,17 @@
           pricePerAll = (pricePerOne * $(this).val());
           $(this).parent().parent().find('.allqty-price').val(pricePerAll);
 
-          $('#neto').val(Number($('#neto').val()) - Number($(this).parent().parent().find('select').attr('neto')));
-          $('#brutto').val(Number($('#brutto').val()) - Number($(this).parent().parent().find('select').attr('brutto')));
+          if ($(this).parent().parent().find('select').length){
+            $('#neto').val(Number($('#neto').val()) - Number($(this).parent().parent().find('select').attr('neto')));
+            $('#brutto').val(Number($('#brutto').val()) - Number($(this).parent().parent().find('select').attr('brutto')));
 
-          $('#neto').val(Number($('#neto').val()) + (Number($(this).parent().parent().find('select').attr('base_neto')) * Number($(this).parent().parent().find('.product_quantity').val())) );
-          $('#brutto').val(Number($('#brutto').val()) + (Number($(this).parent().parent().find('select').attr('base_brutto')) * Number($(this).parent().parent().find('.product_quantity').val())) );
+            $('#neto').val(Number($('#neto').val()) + (Number($(this).parent().parent().find('select').attr('base_neto')) * Number($(this).parent().parent().find('.product_quantity').val())) );
+            $('#brutto').val(Number($('#brutto').val()) + (Number($(this).parent().parent().find('select').attr('base_brutto')) * Number($(this).parent().parent().find('.product_quantity').val())) );
 
-          $(this).parent().parent().find('select').attr('brutto' , (Number(productData.product_bruto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
-          $(this).parent().parent().find('select').attr('neto' , (Number(productData.product_neto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
-
+            $(this).parent().parent().find('select').attr('brutto' , (Number(productData.product_bruto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
+            $(this).parent().parent().find('select').attr('neto' , (Number(productData.product_neto_mass_all) * Number($(this).parent().parent().find('.product_quantity').val())));
+          }
+          
         }else{
           $(this).parent().parent().find('.allqty-price').val(0);
 
@@ -355,6 +373,8 @@
                     @endforeach
                   </select>
                   <input type="hidden" class="hidden_articul" name="hidden_articul[]">
+                  <input type="hidden" class="hidden_brutto" name="hidden_brutto[]">
+                  <input type="hidden" class="hidden_netto" name="hidden_netto[]">
                 </div>
                 <div class="form-group col-md-4">
                   <label for="product">Produkts</label>
@@ -483,5 +503,6 @@
                   <input type="text" class="form-control" name="" id="invoice-date-writen">
                 </div>
             </div>
+            <input type="hidden" id="laratoken" name="_token" value="{{ csrf_token() }}">
       </div>
     </div>
