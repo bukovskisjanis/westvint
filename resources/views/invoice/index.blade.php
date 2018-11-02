@@ -90,7 +90,7 @@
                   <td>{{$invoice_item->client_name}}</td>
                   <td>{{$invoice_item->created_at}}</td>
                   <td>{{$invoice_item->{'payment-date'} }}</td>
-                  <td>Created </td>
+                  <td>{{$invoice_item->status}}</td>
                   <td>{{$invoice_item->total_sum}}</td>
                   <td>{{$invoice_item->creator_name}}</td>
                   <td>{{$invoice_item->updated_at}}</td>
